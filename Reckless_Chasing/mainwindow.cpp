@@ -7,6 +7,7 @@
 #include <QToolBar>
 #include <QVector>
 #include <QString>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,6 +44,7 @@ void MainWindow::on_Quit_Button_clicked()
     if( reply == QMessageBox::Yes)
     {
         QApplication::quit();
+        qDebug() <<"home";
     }
 }
 
@@ -57,7 +59,6 @@ void MainWindow::on_Play_Button_clicked()
     }
     else
     {
-        //QMessageBox::critical(this,"Error","Please fill up all the information below");
         QVector<QString> Unfilled;
         if(!((ui->Total_1_Player->isChecked())||(ui->Total_2_Player->isChecked())||(ui->Total_3_Player->isChecked())||(ui->Total_4_Player->isChecked())))
         {
