@@ -12,4 +12,4 @@ before_install:
 script:
     - qmake -project
     - qmake Reckless_Chasing/Reckless_Chasing.pro
-    - make
+    - make -C Reckless_Chasing/
