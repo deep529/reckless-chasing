@@ -7,20 +7,20 @@
 
 class player : public QGraphicsEllipseItem
 {
-    public :
-        player()
-        {
+public :
+    player()
+    {
 
-        }
+    }
 
-        ~player()
-        {
+    ~player()
+    {
 
-        }
+    }
 
-    protected:
+protected:
 
-    public:
+public:
 
 };
 
