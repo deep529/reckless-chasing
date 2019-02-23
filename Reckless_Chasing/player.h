@@ -1,11 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <QGraphicsRectItem>
+#include <QGraphicsEllipseItem>
 #include <QKeyEvent>
 #include <QGraphicsSceneMouseEvent>
 
-class player : public QGraphicsRectItem
+class player : public QGraphicsEllipseItem
 {
     public :
         player()
@@ -17,9 +17,6 @@ class player : public QGraphicsRectItem
         {
 
         }
-
-        void keyPressEvent(QKeyEvent *event);
-        void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
     protected:
 
