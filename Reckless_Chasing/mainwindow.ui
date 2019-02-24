@@ -31,6 +31,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="status_label">
+
     <property name="geometry">
      <rect>
       <x>121</x>
@@ -52,6 +53,7 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
+
       <x>130</x>
       <y>330</y>
       <width>630</width>
@@ -60,7 +62,9 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+
       <widget class="QLabel" name="No_of_Player">
+
        <property name="font">
         <font>
          <family>DejaVu Sans</family>
@@ -300,7 +304,9 @@
      <bool>false</bool>
     </property>
    </widget>
+
    <widget class="QWidget" name="">
+
     <property name="geometry">
      <rect>
       <x>121</x>
@@ -363,7 +369,9 @@
      </item>
     </layout>
    </widget>
+
    <widget class="QWidget" name="">
+
     <property name="geometry">
      <rect>
       <x>253</x>
@@ -407,7 +415,9 @@
      </item>
     </layout>
    </widget>
+
    <widget class="QWidget" name="">
+
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -466,7 +476,9 @@
      <x>0</x>
      <y>0</y>
      <width>900</width>
+
      <height>27</height>
+
     </rect>
    </property>
    <property name="styleSheet">

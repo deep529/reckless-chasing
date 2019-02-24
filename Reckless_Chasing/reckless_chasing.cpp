@@ -3,7 +3,9 @@
 #include "player.h"
 #include <QMessageBox>
 #include <QPixmap>
+
 #include <qmath.h>
+
 #include <QApplication>
 #include <QVBoxLayout>
 #include <QGraphicsView>
@@ -11,9 +13,11 @@
 #include <QGraphicsScene>
 #include <QGraphicsEllipseItem>
 #include <QDebug>
+
 #include <QThread>
 #include <stdlib.h>
 #define steps 10
+
 
 Reckless_chasing::Reckless_chasing(QWidget *parent) :
     QDialog(parent),
@@ -28,10 +32,12 @@ Reckless_chasing::Reckless_chasing(QWidget *parent) :
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
     QGraphicsScene *scene = new QGraphicsScene();
+
     Player1->setRect(400,250,100,100);
     scene->addItem(Player1);
     Player1->setFlag(QGraphicsItem::ItemIsFocusable);
     Player1->setFocus();
+
     QGraphicsView *view = new QGraphicsView(scene);
     view->setWindowTitle("Reckless Chasing(Play)");
     layout->addWidget(view);
@@ -41,13 +47,16 @@ Reckless_chasing::Reckless_chasing(QWidget *parent) :
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+
     pressedKeys.clear();
+
 }
 
 Reckless_chasing::~Reckless_chasing()
 {
     delete ui;
 }
+
 
 bool Reckless_chasing::eventFilter(QObject *obj, QEvent *event)
 {
