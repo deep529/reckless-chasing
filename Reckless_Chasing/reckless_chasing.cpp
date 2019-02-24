@@ -3,6 +3,7 @@
 #include "player.h"
 #include <QMessageBox>
 #include <QPixmap>
+#include <qmath.h>
 #include <QApplication>
 #include <QVBoxLayout>
 #include <QGraphicsView>
@@ -10,8 +11,9 @@
 #include <QGraphicsScene>
 #include <QGraphicsEllipseItem>
 #include <QDebug>
+#include <QThread>
+#include <stdlib.h>
 #define steps 10
-
 
 Reckless_chasing::Reckless_chasing(QWidget *parent) :
     QDialog(parent),
@@ -44,79 +46,76 @@ Reckless_chasing::Reckless_chasing(QWidget *parent) :
 
 Reckless_chasing::~Reckless_chasing()
 {
+    th1.terminate();
     delete ui;
 }
 
 bool Reckless_chasing::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyRelease) {
-        qDebug() <<"Released "<< (char) ((QKeyEvent*)event)->key();
-
         pressedKeys.remove(((QKeyEvent*)event)->key());
-
-        qreal x = Player1->x();
-        qreal y = Player1->y();
-        qreal up = y - steps;
-        qreal down = y + steps;
-        qreal left = x - steps;
-        qreal right = x + steps;
-
-        if (pressedKeys.contains(Qt::Key_A))
-        {
-            Player1->setPos(left, y);
-            x = left;
-        }
-
-        if (pressedKeys.contains(Qt::Key_W))
-        {
-            Player1->setPos(x, up);
-            y = up;
-        }
-
-        if (pressedKeys.contains(Qt::Key_D))
-        {
-            Player1->setPos(right, y);
-            x = right;
-        }
-
-        if (pressedKeys.contains(Qt::Key_S))
-        {
-            Player1->setPos(x, down);
-            y = down;
-        }
     }
     else if (event->type() == QEvent::KeyPress) {
-        qDebug() <<"Pressed "<< (char) ((QKeyEvent*)event)->key();
-
         pressedKeys.insert(((QKeyEvent*)event)->key());
 
-        qreal x = Player1->x();
-        qreal y = Player1->y();
-        qreal up = y - steps;
-        qreal down = y + steps;
-        qreal left = x - steps;
-        qreal right = x + steps;
-
-        if (pressedKeys.contains(Qt::Key_A))
+        if((pressedKeys.contains(Qt::Key_W))&&(pressedKeys.contains(Qt::Key_S)))
         {
-            Player1->setPos(left, y);
+            //Do  nothing
+        }
+        else if(pressedKeys.contains(Qt::Key_W))
+        {
+            QPointF center = get_MousePos();
+            fixed_Pos(center,true);
+        }
+        else if(pressedKeys.contains(Qt::Key_S))
+        {
+            QPointF center = get_MousePos();
+            fixed_Pos(center,false);
         }
 
-        if (pressedKeys.contains(Qt::Key_W))
-        {
-            Player1->setPos(x, up);
-        }
-
-        if (pressedKeys.contains(Qt::Key_D))
-        {
-            Player1->setPos(right, y);
-        }
-
-        if (pressedKeys.contains(Qt::Key_S))
-        {
-            Player1->setPos(x, down);
-        }
     }
     return false;
+}
+
+QPointF Reckless_chasing::get_MousePos()
+{
+    QPointF window_origin = QPointF(400,250);
+    QPointF origin = mapToGlobal(QPoint(0,0));
+    QPointF mouse_pos = QCursor::pos();
+    mouse_pos -= origin;
+    mouse_pos -= window_origin;
+    QPointF center = mouse_pos - QPointF(50,50);
+    return center;
+}
+
+void Reckless_chasing::fixed_Pos(QPointF center, bool isUp)
+{
+
+    qreal dy = (center.y() - Player1->y());
+    qreal dx = (center.x() - Player1->x());
+    dy = (dy / sqrt(pow(dy,2) + pow(dx,2)));
+    dx = (dx / sqrt(pow(dy,2) + pow(dx,2)));
+    qreal x,y;
+    if(isUp)
+    {
+        x = Player1->x()+(steps * dx);
+        y = Player1->y()+(steps * dy);
+    }
+    else
+    {
+        x = Player1->x()-(steps * dx);
+        y = Player1->y()-(steps * dy);
+    }
+    if(!((x < -400) || (x > 400) || (y < -250) || (y > 250)))
+    {
+        if(!(((center.x() - Player1->x())*(center.x() - (Player1->x() + (steps * dx)))) < 0))
+        {
+            Player1->setX(x);
+        }
+        if(!(((center.y() - Player1->y())*(center.y() - (Player1->y() + (steps * dy)))) < 0))
+        {
+            Player1->setY(y);
+        }
+    }
 }
 

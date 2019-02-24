@@ -6,6 +6,7 @@
 #include <QGraphicsEllipseItem>
 #include <QKeyEvent>
 #include <QGraphicsSceneMouseEvent>
+#include <QThread>
 
 namespace Ui {
 class Reckless_chasing;
@@ -16,12 +17,16 @@ class Reckless_chasing : public QDialog
     Q_OBJECT
 
 public:
+    QThread th1;
     QSet<int> pressedKeys;
     player *Player1 = new player();
+    QPointF mouse_pos;
 
     explicit Reckless_chasing(QWidget *parent = nullptr);
     ~Reckless_chasing();
     bool eventFilter(QObject * obj, QEvent * event);
+    QPointF get_MousePos();
+    void fixed_Pos(QPointF center,bool isUp);
 
 private slots:
 
