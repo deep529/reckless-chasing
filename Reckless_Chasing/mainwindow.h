@@ -46,6 +46,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Reckless_chasing *play;
+
+    void hide_host_options();
+    void show_host_options();
+    void hide_join_options();
+    void show_join_options();
+    void show_error();
 };
 
 #endif // MAINWINDOW_H
