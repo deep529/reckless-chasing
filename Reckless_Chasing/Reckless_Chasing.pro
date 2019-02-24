@@ -27,21 +27,21 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    reckless_chasing.cpp
+        reckless_chasing.cpp \
+        player.cpp
 
 HEADERS += \
         mainwindow.h \
-    reckless_chasing.h
+    reckless_chasing.h \
+    player.h
 
 FORMS += \
         mainwindow.ui \
-    reckless_chasing.ui
+        reckless_chasing.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES += \
-    images.qrc
 

@@ -35,6 +35,14 @@ private slots:
 
     void on_actionHelp_triggered();
 
+    void on_Host_Button_clicked();
+
+    void on_Join_Button_clicked();
+
+    void on_plus_button_clicked();
+
+    void on_minus_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     Reckless_chasing *play;
