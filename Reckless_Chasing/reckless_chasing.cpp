@@ -13,8 +13,6 @@
 #define steps 10
 
 
-player *Player1 = new player();
-
 Reckless_chasing::Reckless_chasing(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Reckless_chasing)
@@ -22,29 +20,26 @@ Reckless_chasing::Reckless_chasing(QWidget *parent) :
     ui->setupUi(this);
 
     this->installEventFilter(this);
-    //setMouseTracking(true);
 
-    QPixmap background(":/images/Images/Play_Background.jpg");
-    background = background.scaled(this->size(), Qt::IgnoreAspectRatio);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, background);
-    this->setPalette(palette);
+    this->setFixedSize(900,600);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(50);
+    layout->setMargin(0);
     QGraphicsScene *scene = new QGraphicsScene();
-    //player *Player1 = new player();
-    Player1->setRect(500,200,100,100);
+    Player1->setRect(400,250,100,100);
     scene->addItem(Player1);
     Player1->setFlag(QGraphicsItem::ItemIsFocusable);
     Player1->setFocus();
     QGraphicsView *view = new QGraphicsView(scene);
-    //view->setMouseTracking(true);
     view->setWindowTitle("Reckless Chasing(Play)");
     layout->addWidget(view);
     view->show();
-    view->setFixedSize(1100,600);
-    scene->setSceneRect(0,0,1100,600);
+    view->setFixedSize(900,600);
+    scene->setSceneRect(0,0,900,600);
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    pressedKeys.clear();
 }
 
 Reckless_chasing::~Reckless_chasing()
@@ -54,9 +49,10 @@ Reckless_chasing::~Reckless_chasing()
 
 bool Reckless_chasing::eventFilter(QObject *obj, QEvent *event)
 {
-    if(event->type()==QEvent::KeyPress) {
+    if (event->type() == QEvent::KeyRelease) {
+        qDebug() <<"Released "<< (char) ((QKeyEvent*)event)->key();
 
-        pressedKeys += ((QKeyEvent*)event)->key();
+        pressedKeys.remove(((QKeyEvent*)event)->key());
 
         qreal x = Player1->x();
         qreal y = Player1->y();
@@ -65,91 +61,62 @@ bool Reckless_chasing::eventFilter(QObject *obj, QEvent *event)
         qreal left = x - steps;
         qreal right = x + steps;
 
-        if( (pressedKeys.contains(Qt::Key_A)) && !(pressedKeys.contains(Qt::Key_S)) && !(pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_W)) )  //1
+        if (pressedKeys.contains(Qt::Key_A))
         {
-            Player1->setPos(left,y);
-        }
-        else if( (pressedKeys.contains(Qt::Key_S)) && !(pressedKeys.contains(Qt::Key_A)) && !(pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_W)) )
-        {
-            Player1->setPos(x,down);
-        }
-        else if( (pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_A)) && !(pressedKeys.contains(Qt::Key_S)) && !(pressedKeys.contains(Qt::Key_W)) )
-        {
-            Player1->setPos(right,y);
-        }
-        else if( (pressedKeys.contains(Qt::Key_W)) && !(pressedKeys.contains(Qt::Key_A)) && !(pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_S)) )
-        {
-            Player1->setPos(x,up);
-        }
-        else if( (pressedKeys.contains(Qt::Key_A)) && (pressedKeys.contains(Qt::Key_S)) && !(pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_W)) )  //1
-        {
-            Player1->setPos(left,down);
-        }
-        else if( (pressedKeys.contains(Qt::Key_A)) && (pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_S)) && !(pressedKeys.contains(Qt::Key_W)) )  //1
-        {
-            Player1->setPos(x,y);
-        }
-        else if( (pressedKeys.contains(Qt::Key_A)) && (pressedKeys.contains(Qt::Key_W)) && !(pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_S)) )  //1
-        {
-            Player1->setPos(left,up);
-        }
-        else if( (pressedKeys.contains(Qt::Key_D)) && (pressedKeys.contains(Qt::Key_S)) && !(pressedKeys.contains(Qt::Key_A)) && !(pressedKeys.contains(Qt::Key_W)) )  //1
-        {
-            Player1->setPos(right,down);
-        }
-        else if( (pressedKeys.contains(Qt::Key_D)) && (pressedKeys.contains(Qt::Key_W)) && !(pressedKeys.contains(Qt::Key_A)) && !(pressedKeys.contains(Qt::Key_S)) )  //1
-        {
-            Player1->setPos(right,up);
-        }
-        else if( (pressedKeys.contains(Qt::Key_W)) && (pressedKeys.contains(Qt::Key_S)) && !(pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_A)) )  //1
-        {
-            Player1->setPos(x,y);
-        }
-        else if( (pressedKeys.contains(Qt::Key_A)) && (pressedKeys.contains(Qt::Key_S)) && (pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_W)) )  //1
-        {
-            Player1->setPos(x,down);
-        }
-        else if( (pressedKeys.contains(Qt::Key_A)) && (pressedKeys.contains(Qt::Key_S)) && (pressedKeys.contains(Qt::Key_W)) && !(pressedKeys.contains(Qt::Key_D)) )  //1
-        {
-            Player1->setPos(left,y);
-        }
-        else if( (pressedKeys.contains(Qt::Key_A)) && (pressedKeys.contains(Qt::Key_D)) && (pressedKeys.contains(Qt::Key_W)) && !(pressedKeys.contains(Qt::Key_S)) )  //1
-        {
-            Player1->setPos(x,up);
-        }
-        else if( (pressedKeys.contains(Qt::Key_D)) && (pressedKeys.contains(Qt::Key_S)) && (pressedKeys.contains(Qt::Key_W)) && !(pressedKeys.contains(Qt::Key_A)) )  //1
-        {
-            Player1->setPos(right,y);
-        }
-        else if( (pressedKeys.contains(Qt::Key_W)) && (pressedKeys.contains(Qt::Key_S)) && (pressedKeys.contains(Qt::Key_D)) && (pressedKeys.contains(Qt::Key_A)) )  //1
-        {
-            Player1->setPos(x,y);
-        }
-        else if( !(pressedKeys.contains(Qt::Key_W)) && !(pressedKeys.contains(Qt::Key_S)) && !(pressedKeys.contains(Qt::Key_D)) && !(pressedKeys.contains(Qt::Key_A)) )  //1
-        {
-            Player1->setPos(x,y);
+            Player1->setPos(left, y);
+            x = left;
         }
 
+        if (pressedKeys.contains(Qt::Key_W))
+        {
+            Player1->setPos(x, up);
+            y = up;
+        }
 
+        if (pressedKeys.contains(Qt::Key_D))
+        {
+            Player1->setPos(right, y);
+            x = right;
+        }
+
+        if (pressedKeys.contains(Qt::Key_S))
+        {
+            Player1->setPos(x, down);
+            y = down;
+        }
     }
+    else if (event->type() == QEvent::KeyPress) {
+        qDebug() <<"Pressed "<< (char) ((QKeyEvent*)event)->key();
 
-    if(event->type()==QEvent::KeyRelease)
-    {
+        pressedKeys.insert(((QKeyEvent*)event)->key());
 
-        pressedKeys -= ((QKeyEvent*)event)->key();
+        qreal x = Player1->x();
+        qreal y = Player1->y();
+        qreal up = y - steps;
+        qreal down = y + steps;
+        qreal left = x - steps;
+        qreal right = x + steps;
+
+        if (pressedKeys.contains(Qt::Key_A))
+        {
+            Player1->setPos(left, y);
+        }
+
+        if (pressedKeys.contains(Qt::Key_W))
+        {
+            Player1->setPos(x, up);
+        }
+
+        if (pressedKeys.contains(Qt::Key_D))
+        {
+            Player1->setPos(right, y);
+        }
+
+        if (pressedKeys.contains(Qt::Key_S))
+        {
+            Player1->setPos(x, down);
+        }
     }
-
-
     return false;
 }
 
-void Reckless_chasing::on_Quit_Button_clicked()
-{
-    QMessageBox::StandardButton reply = QMessageBox::question(this,"Quit","Do you want to quit ?");
-    if( reply == QMessageBox::Yes)
-    {
-        parentWidget()->show();
-        this->close();
-        qDebug() <<"play\n";
-    }
-}

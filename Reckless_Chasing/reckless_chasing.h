@@ -1,6 +1,7 @@
 #ifndef RECKLESS_CHASING_H
 #define RECKLESS_CHASING_H
 
+#include "player.h"
 #include <QDialog>
 #include <QGraphicsEllipseItem>
 #include <QKeyEvent>
@@ -16,13 +17,13 @@ class Reckless_chasing : public QDialog
 
 public:
     QSet<int> pressedKeys;
+    player *Player1 = new player();
 
     explicit Reckless_chasing(QWidget *parent = nullptr);
     ~Reckless_chasing();
     bool eventFilter(QObject * obj, QEvent * event);
 
 private slots:
-    void on_Quit_Button_clicked();
 
 private:
     Ui::Reckless_chasing *ui;

@@ -3,8 +3,8 @@
 #include <QMessageBox>
 #include <QPixmap>
 #include <QToolTip>
-#include <QRadioButton>
 #include <QToolBar>
+#include <QRadioButton>
 #include <QVector>
 #include <QString>
 #include <QDebug>
@@ -15,17 +15,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->toolBar->setFixedHeight(30);
+    this->setFixedSize(900,600);
+    ui->player_count->display(0);
+    ui->Name_lineEdit->setText("Player 1");
 
-    QPixmap background(":/images/Images/Home_Background.jpg");              //For backgroung image of the main window.
-    background = background.scaled(this->size(), Qt::IgnoreAspectRatio);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, background);
-    this->setPalette(palette);
-
-    qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #000000; border: 1px solid white; }"              //For customizing different button.
-                        "QRadioButton::indicator:checked {background-color:#000000; border: 2px solid white;}"
-                        "QRadioButton::indicator:unchecked {background-color:#ffffff; border: 2px solid white;}");
+    ui->plus_button->setHidden(true);
+    ui->minus_button->setHidden(true);
+    ui->player_count->setHidden(true);
+    ui->No_of_Player->setHidden(true);
+    ui->IP_Address_lineEdit->setHidden(true);
+    ui->IP_Address_label->setHidden(true);
 }
 
 MainWindow::~MainWindow()
@@ -50,7 +49,7 @@ void MainWindow::on_Quit_Button_clicked()
 
 void MainWindow::on_Play_Button_clicked()
 {
-    if(((ui->Total_1_Player->isChecked())||(ui->Total_2_Player->isChecked())||(ui->Total_3_Player->isChecked())||(ui->Total_4_Player->isChecked()))&&(!(ui->Name_lineEdit->text().isEmpty()))&&(!(ui->IP_Address_lineEdit->text().isEmpty())))
+    if((((ui->player_count->intValue() > 1) && (ui->Host_Button->isChecked()))||((!(ui->IP_Address_lineEdit->text().isEmpty()))&&(ui->Join_Button->isChecked())))&&(!(ui->Name_lineEdit->text().isEmpty())))
     {
         play = new Reckless_chasing(this);
         this->hide();                                        //For Hiding the home window when play window is going to open.
@@ -60,7 +59,11 @@ void MainWindow::on_Play_Button_clicked()
     else
     {
         QVector<QString> Unfilled;
-        if(!((ui->Total_1_Player->isChecked())||(ui->Total_2_Player->isChecked())||(ui->Total_3_Player->isChecked())||(ui->Total_4_Player->isChecked())))
+        if((!(ui->Join_Button->isChecked()))&&(!(ui->Host_Button->isChecked())))
+        {
+            Unfilled.push_back("Host or Join");
+        }
+        if((ui->player_count->intValue() < 2)&&(ui->Host_Button->isChecked()))
         {
             Unfilled.push_back("No. of Player");
         }
@@ -68,7 +71,7 @@ void MainWindow::on_Play_Button_clicked()
         {
             Unfilled.push_back("Name");
         }
-        if(ui->IP_Address_lineEdit->text().isEmpty())
+        if((ui->IP_Address_lineEdit->text().isEmpty())&&(ui->Join_Button->isChecked()))
         {
             Unfilled.push_back("IP Address");
         }
@@ -110,4 +113,51 @@ void MainWindow::on_actionAbout_Qt_triggered()
 void MainWindow::on_actionHelp_triggered()
 {
 
+}
+
+void MainWindow::on_Host_Button_clicked()
+{
+    if(ui->player_count->intValue() < 2)
+    {
+        ui->player_count->display(2);
+    }
+    ui->plus_button->setVisible(true);
+    ui->minus_button->setVisible(true);
+    ui->player_count->setVisible(true);
+    ui->No_of_Player->setVisible(true);
+    ui->IP_Address_lineEdit->setText("");
+    ui->IP_Address_lineEdit->setHidden(true);
+    ui->IP_Address_label->setHidden(true);
+}
+
+void MainWindow::on_Join_Button_clicked()
+{
+    ui->IP_Address_lineEdit->setVisible(true);
+    ui->IP_Address_lineEdit->setText("127.0.0.1");
+    ui->IP_Address_label->setVisible(true);
+    ui->player_count->display(0);
+    ui->plus_button->setHidden(true);
+    ui->minus_button->setHidden(true);
+    ui->player_count->setHidden(true);
+    ui->No_of_Player->setHidden(true);
+}
+
+void MainWindow::on_plus_button_clicked()
+{
+    int players = ui->player_count->intValue();
+
+    if(players < 4 )
+    {
+        ui->player_count->display(players+1);
+    }
+}
+
+void MainWindow::on_minus_button_clicked()
+{
+    int players = ui->player_count->intValue();
+
+    if(players > 2)
+    {
+        ui->player_count->display(players-1);
+    }
 }
