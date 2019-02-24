@@ -1,5 +1,3 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QPixmap>
 #include <QToolTip>
@@ -8,6 +6,9 @@
 #include <QVector>
 #include <QString>
 #include <QDebug>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "serverwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -105,16 +106,17 @@ void MainWindow::on_Play_Button_clicked() {
 
 
     if (ui->Host_Button->isChecked()) {
-        play = new Reckless_chasing(this);
+        qDebug() << "Host detected";
+        this->serwin = new ServerWindow(this);
         this->hide();
-        play->setWindowTitle("Reckless Chasing(Play)");
-        play->show();
+        this->serwin->setWindowTitle("Reckless Chasing(Play)");
+        this->serwin->show();
     }
     else if (ui->Join_Button->isChecked()) {
-        play = new Reckless_chasing(this);
+        /*play = new Reckless_chasing(this);
         this->hide();
         play->setWindowTitle("Reckless Chasing(Play)");
-        play->show();
+        play->show();*/
     }
 }
 
