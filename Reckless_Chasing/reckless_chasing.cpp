@@ -46,7 +46,6 @@ Reckless_chasing::Reckless_chasing(QWidget *parent) :
 
 Reckless_chasing::~Reckless_chasing()
 {
-    th1.terminate();
     delete ui;
 }
 
