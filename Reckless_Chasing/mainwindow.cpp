@@ -14,9 +14,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow) {
     ui->setupUi(this);
     this->setFixedSize(900,600);
-
-
-    this->setFixedSize(900,600);
+    
+    this->hide_host_options();
+    this->hide_join_options();    
+    
     ui->player_count->display(0);
     ui->Name_lineEdit->setText("Player 1");
 
@@ -38,6 +39,57 @@ void MainWindow::hide_host_options() {
     ui->minus_button->setHidden(true);
     ui->player_count->setHidden(true);
     ui->player_count_label->setHidden(true);
+}
+void MainWindow::show_host_options() {
+    ui->plus_button->setHidden(false);
+    ui->minus_button->setHidden(false);
+    ui->player_count->setHidden(false);
+    ui->player_count_label->setHidden(false);
+}
+
+void MainWindow::hide_join_options() {
+    ui->IP_Address_lineEdit->setHidden(true);
+    ui->IP_Address_label->setHidden(true);
+}
+
+void MainWindow::show_join_options() {
+    ui->IP_Address_lineEdit->setHidden(false);
+    ui->IP_Address_label->setHidden(false);
+}
+
+void MainWindow::on_Host_Button_clicked() {
+    this->hide_join_options();
+    ui->IP_Address_lineEdit->setText("");
+
+    if(ui->player_count->intValue() < 2) {
+        ui->player_count->display(2);
+    }
+
+    this->show_host_options();
+}
+
+void MainWindow::on_Join_Button_clicked() {
+    this->hide_host_options();
+    ui->player_count->display(0);
+
+    ui->IP_Address_lineEdit->setText("127.0.0.1");
+    this->show_join_options();
+}
+
+void MainWindow::on_plus_button_clicked() {
+    int players = ui->player_count->intValue();
+
+    if(players < 4) {
+        ui->player_count->display(players+1);
+    }
+}
+
+void MainWindow::on_minus_button_clicked() {
+    int players = ui->player_count->intValue();
+
+    if(players > 2) {
+        ui->player_count->display(players-1);
+    }
 }
 
 
