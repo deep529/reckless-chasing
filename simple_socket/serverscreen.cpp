@@ -22,5 +22,5 @@ void ServerScreen::dataRcvd(const Packet pkt) {
     this->ob->setX(pkt.x);
     this->ob->setY(pkt.y);
 
-    qDebug() << "ServerScreen: Rcvd";
+    qDebug() << "Rcvd: " << pkt.x << pkt.y;
 }

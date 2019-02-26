@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QTime>
 #include "object.h"
 #include "myserver.h"
 #include "packet.h"
@@ -30,6 +31,7 @@ private:
     Object *ob;
     QTcpSocket *socket;
     Packet pkt;
+    QTime time;
 };
 
 #endif // CLIENTSCREEN_H

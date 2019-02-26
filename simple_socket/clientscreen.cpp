@@ -19,6 +19,8 @@ ClientScreen::ClientScreen(const quint16 port, QObject *parent) : QObject(parent
     this->view = new QGraphicsView(scene);
     this->view->setWindowTitle("Client");
     this->view->setFixedSize(800, 600);
+
+    this->time.start();
 }
 
 void ClientScreen::show() {
@@ -35,7 +37,10 @@ void ClientScreen::sendPosition(qreal x, qreal y) {
 }
 
 void ClientScreen::onMove(qreal x, qreal y) {
-    this->sendPosition(x, y);
+    if (this->time.elapsed() > 100) {
+        this->sendPosition(x, y);
+        this->time.restart();
+    }
 }
 
 void ClientScreen::onConnection() {
