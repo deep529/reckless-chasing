@@ -8,6 +8,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QTime>
+#include <QTimer>
 #include "object.h"
 #include "myserver.h"
 #include "packet.h"
@@ -20,10 +21,10 @@ public:
     void sendPosition(qreal x, qreal y);
 
 private slots:
-    void onMove(qreal x, qreal y);
     void onConnection();
     void dataRcvd();
     void onDisconnect();
+    void sendUpdate();
 
 private:
     QGraphicsView *view;
@@ -31,6 +32,7 @@ private:
     Object *ob;
     QTcpSocket *socket;
     Packet pkt;
+    QTimer timer;
     QTime time;
 };
 

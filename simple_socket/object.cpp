@@ -1,5 +1,5 @@
 #include "object.h"
-#define SHIFT 20
+#define SHIFT 10
 
 Object::Object() {
     this->setRect(0,0,50,50);
@@ -9,29 +9,30 @@ Object::Object() {
 
 Object::~Object() {}
 
+void Object::set_updated_values(qreal x, qreal y) {
+    this->x_updated = x;
+    this->y_updated = y;
+}
+
 void Object::keyPressEvent(QKeyEvent *event) {
-    qDebug() << "keypressed";
-    qreal newX = this->x_updated, newY = this->y_updated;
+    // qDebug() << "keypressed";
 
     if (event->key() == Qt::Key_Left) {
         // this->setX(this->x()-SHIFT);
-        newX -= SHIFT;
+        this->x_updated -= SHIFT;
     }
     else if (event->key() == Qt::Key_Right) {
         // this->setX(this->x()+SHIFT);
-        newX += SHIFT;
+        this->x_updated += SHIFT;
     }
     else if (event->key() == Qt::Key_Up) {
         // this->setY(this->y()-SHIFT);
-        newY -= SHIFT;
+        this->y_updated -= SHIFT;
     }
     else if (event->key() == Qt::Key_Down) {
         // this->setY(this->y()+SHIFT);
-        newY += SHIFT;
+        this->y_updated += SHIFT;
     }
 
-    this->x_updated = newX;
-    this->y_updated = newY;
-
-    emit this->movedTo(newX, newY);
+    // emit this->movedTo(newX, newY);
 }

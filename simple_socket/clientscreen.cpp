@@ -11,7 +11,6 @@ ClientScreen::ClientScreen(const quint16 port, QObject *parent) : QObject(parent
     this->ob = new Object();
     this->ob->setFlag(QGraphicsItem::ItemIsFocusable);
     this->ob->setFocus();
-    connect(this->ob, SIGNAL(movedTo(qreal, qreal)), this, SLOT(onMove(qreal, qreal)));
 
     this->scene = new QGraphicsScene();
     this->scene->addItem(this->ob);
@@ -19,7 +18,10 @@ ClientScreen::ClientScreen(const quint16 port, QObject *parent) : QObject(parent
     this->view->setWindowTitle("Client");
     this->view->setFixedSize(800, 600);
 
-    this->time.start();
+    this->socket->waitForConnected();
+
+    connect(&this->timer, SIGNAL(timeout()), this, SLOT(sendUpdate()));
+    this->timer.start(20);
 }
 
 void ClientScreen::show() {
@@ -30,16 +32,9 @@ void ClientScreen::sendPosition(qreal x, qreal y) {
     pkt.x = x;
     pkt.y = y;
 
-    qDebug() << "sent " << x << y;
+    // qDebug() << "sent " << x << y;
     this->socket->write(reinterpret_cast<char*>(&(this->pkt)), sizeof(this->pkt));
-    this->socket->flush();
-}
-
-void ClientScreen::onMove(qreal x, qreal y) {
-    if (this->time.elapsed() > 100) {
-        this->sendPosition(x, y);
-        this->time.restart();
-    }
+    // this->socket->flush();
 }
 
 void ClientScreen::onConnection() {
@@ -48,7 +43,7 @@ void ClientScreen::onConnection() {
 }
 
 void ClientScreen::dataRcvd() {
-    qDebug() << "Data rcvd";
+    // qDebug() << "Data rcvd";
     this->socket->read(reinterpret_cast<char*>(&pkt), sizeof(pkt));
     this->ob->setX(pkt.x);
     this->ob->setY(pkt.y);
@@ -58,4 +53,8 @@ void ClientScreen::onDisconnect() {
     qDebug() << "Disconnected";
     this->socket->close();
     this->deleteLater();
+}
+
+void ClientScreen::sendUpdate() {
+    this->sendPosition(this->ob->x_updated, this->ob->y_updated);
 }
