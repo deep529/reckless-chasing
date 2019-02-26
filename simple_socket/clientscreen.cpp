@@ -9,7 +9,6 @@ ClientScreen::ClientScreen(const quint16 port, QObject *parent) : QObject(parent
     connect(this->socket, SIGNAL(disconnected()), this, SLOT(onDisconnect()));
 
     this->ob = new Object();
-    this->ob->setRect(0,0,50,50);
     this->ob->setFlag(QGraphicsItem::ItemIsFocusable);
     this->ob->setFocus();
     connect(this->ob, SIGNAL(movedTo(qreal, qreal)), this, SLOT(onMove(qreal, qreal)));

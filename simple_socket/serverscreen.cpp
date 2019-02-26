@@ -7,7 +7,6 @@ ServerScreen::ServerScreen(const quint16 port, QObject *parent) : QObject (paren
 
     this->scene = new QGraphicsScene();
     this->ob = new Object();
-    this->ob->setRect(0,0,50,50);
     this->scene->addItem(this->ob);
     this->view = new QGraphicsView(scene);
     this->view->setWindowTitle("Server");

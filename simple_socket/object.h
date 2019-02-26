@@ -18,6 +18,9 @@ public:
 
 signals:
     void movedTo(qreal x, qreal y);
+
+private:
+    qreal x_updated, y_updated;
 };
 
 
