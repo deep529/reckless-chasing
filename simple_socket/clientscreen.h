@@ -30,10 +30,10 @@ private:
     QGraphicsView *view;
     QGraphicsScene *scene;
     Object *ob;
+    Object *other_ob;
     QTcpSocket *socket;
-    Packet pkt;
+    Packet pkt, rcv_pkt;
     QTimer timer;
-    QTime time;
 };
 
 #endif // CLIENTSCREEN_H

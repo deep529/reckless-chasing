@@ -15,13 +15,15 @@ public:
     void start(const quint16 port);
 
 signals:
-    void dataRcvd(const Packet pkt);
+    void dataRcvd(Packet pkt);
+    void onNewConnection(MyThread *thread);
 
 public slots:
     void dataAvailabel(const Packet pkt);
 
 protected:
     void incomingConnection(const qintptr socket_descriptor);
+
 };
 
 #endif // MYSERVER_H

@@ -10,12 +10,15 @@ class MyThread : public QThread {
     Q_OBJECT
 
 public:
+    int id;
     explicit MyThread(const qintptr desc, QObject *parent = nullptr);
     void run();
+    void sendPacket(Packet pkt);
 
 signals:
     void error(QTcpSocket::SocketError err);
-    void dataAvailable(const Packet);
+    void dataAvailable(Packet);
+    void exiting(MyThread*);
 
 public slots:
     void onRecv();

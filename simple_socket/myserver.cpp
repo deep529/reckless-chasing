@@ -15,8 +15,8 @@ void MyServer::start(const quint16 port) {
     }
 }
 
-void MyServer::dataAvailabel(const Packet pkt) {
-    qDebug() << "Server Class: data availabel";
+void MyServer::dataAvailabel(Packet pkt) {
+    //qDebug() << "Server Class: data availabel";
     emit this->dataRcvd(pkt);
 }
 
@@ -26,5 +26,7 @@ void MyServer::incomingConnection(const qintptr socket_descriptor) {
     MyThread *thread = new MyThread(socket_descriptor, this);
     connect(thread, SIGNAL(dataAvailable(const Packet)), this, SLOT(dataAvailabel(const Packet)));
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    emit this->onNewConnection(thread);
+    qDebug() << "emmited";
     thread->start();
 }

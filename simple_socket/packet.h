@@ -3,8 +3,16 @@
 
 #include <QObject>
 
+enum PacketType {
+    FIRST_PACKET,
+    NEW_OBJECT,
+    NORMAL_PACKET
+};
+
 class Packet {
 public:
+    PacketType type;
+    int id;
     qreal x, y;
     Packet();
     Packet(const qreal x, const qreal y);
