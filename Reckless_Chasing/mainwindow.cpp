@@ -17,9 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     window_size = QPointF(900,600);
 
     this->setFixedSize(window_size.x(),window_size.y());
-    this->hide_host_options();
 
-    ui->player_count->display(0);
+    ui->player_count->display(2);
     ui->Name_lineEdit->setText("Player 1");
     ui->IP_Address_lineEdit->setText("127.0.0.1");
     ui->port_lineEdit->setText("0000");
@@ -27,35 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow() {
     delete ui;
-}
-
-
-void MainWindow::hide_host_options() {
-    ui->plus_button->setHidden(true);
-    ui->minus_button->setHidden(true);
-    ui->player_count->setHidden(true);
-    ui->player_count_label->setHidden(true);
-}
-
-void MainWindow::show_host_options() {
-    ui->plus_button->setHidden(false);
-    ui->minus_button->setHidden(false);
-    ui->player_count->setHidden(false);
-    ui->player_count_label->setHidden(false);
-}
-
-void MainWindow::on_Host_Button_clicked() {
-
-    if(ui->player_count->intValue() < 2) {
-        ui->player_count->display(2);
-    }
-
-    this->show_host_options();
-}
-
-void MainWindow::on_Join_Button_clicked() {
-    this->hide_host_options();
-    ui->player_count->display(0);
 }
 
 void MainWindow::on_plus_button_clicked() {
@@ -98,16 +68,16 @@ void MainWindow::on_Play_Button_clicked() {
 
 
     if (ui->Host_Button->isChecked()) {
-        play = new Reckless_chasing(this);
+        quint16 port = quint16(ui->port_lineEdit->text().toInt());
+        this->screen = new ServerScreen(port, ui->player_count->intValue(), this);
+        static_cast<ServerScreen*>(this->screen)->show();
         this->hide();
-        play->setWindowTitle("Reckless Chasing(Play)");
-        play->show();
     }
     else if (ui->Join_Button->isChecked()) {
-        play = new Reckless_chasing(this);
+        quint16 port = quint16(ui->port_lineEdit->text().toInt());
+        this->screen = new ClientScreen(port, ui->player_count->intValue(), this);
+        static_cast<ClientScreen*>(this->screen)->show();
         this->hide();
-        play->setWindowTitle("Reckless Chasing(Play)");
-        play->show();
     }
 }
 

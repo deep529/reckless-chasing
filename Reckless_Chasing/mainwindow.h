@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <QtTest>
 #include <QString>
-#include "reckless_chasing.h"
+#include <serverscreen.h>
+#include <clientscreen.h>
 
 namespace Ui {
 class MainWindow;
@@ -39,20 +40,14 @@ private slots:
 
     void on_actionHelp_triggered();
 
-    void on_Host_Button_clicked();
-
-    void on_Join_Button_clicked();
-
     void on_plus_button_clicked();
 
     void on_minus_button_clicked();
 
 private:
     Ui::MainWindow *ui;
-    Reckless_chasing *play;
+    QObject *screen;
 
-    void hide_host_options();
-    void show_host_options();
     void show_error();
 };
 

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui testlib
+QT       += core gui testlib network
 
 CONFIG += qt console warn_on depend_includepath testcase
 
@@ -30,16 +30,30 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         reckless_chasing.cpp \
-        player.cpp
+        player.cpp \
+    c2spacket.cpp \
+    clientscreen.cpp \
+    myserver.cpp \
+    mythread.cpp \
+    s2cpacket.cpp \
+    serverscreen.cpp \
+    object.cpp \
 
 HEADERS += \
         mainwindow.h \
     reckless_chasing.h \
-    player.h
+    player.h \
+    c2spacket.h \
+    clientscreen.h \
+    myserver.h \
+    mythread.h \
+    s2cpacket.h \
+    serverscreen.h \
+    object.h \
 
 FORMS += \
         mainwindow.ui \
-        reckless_chasing.ui
+        reckless_chasing.ui \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
