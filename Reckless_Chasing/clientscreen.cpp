@@ -1,10 +1,10 @@
 #include "clientscreen.h"
 
-ClientScreen::ClientScreen(const quint16 port, int max_players, QObject *parent) : QObject(parent) {
+ClientScreen::ClientScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject(parent) {
     this->max_players = max_players;
 
     this->socket = new QTcpSocket(this);
-    this->socket->connectToHost("10.42.0.1", port);
+    this->socket->connectToHost(ip, port);
 
     connect(this->socket, SIGNAL(connected()), this,  SLOT(onConnection()));
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(idRcvd()));

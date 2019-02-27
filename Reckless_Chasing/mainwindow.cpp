@@ -69,13 +69,16 @@ void MainWindow::on_Play_Button_clicked() {
 
     if (ui->Host_Button->isChecked()) {
         quint16 port = quint16(ui->port_lineEdit->text().toInt());
-        this->screen = new ServerScreen(port, ui->player_count->intValue(), this);
+        QString ip = ui->IP_Address_lineEdit->text();
+
+        this->screen = new ServerScreen(ip, port, ui->player_count->intValue(), this);
         static_cast<ServerScreen*>(this->screen)->show();
         this->hide();
     }
     else if (ui->Join_Button->isChecked()) {
         quint16 port = quint16(ui->port_lineEdit->text().toInt());
-        this->screen = new ClientScreen(port, ui->player_count->intValue(), this);
+        QString ip = ui->IP_Address_lineEdit->text();
+        this->screen = new ClientScreen(ip, port, ui->player_count->intValue(), this);
         static_cast<ClientScreen*>(this->screen)->show();
         this->hide();
     }

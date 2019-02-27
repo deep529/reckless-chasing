@@ -2,9 +2,9 @@
 
 MyServer::MyServer(QObject *parent) : QTcpServer(parent) {}
 
-void MyServer::start(const quint16 port) {
+void MyServer::start(const QString ip, const quint16 port) {
     QHostAddress addr;
-    addr.setAddress("10.42.0.1");
+    addr.setAddress(ip);
     if (!this->listen(addr, port)) {
         qDebug() << "Server Class: Server could not start";
         exit(1);

@@ -1,10 +1,10 @@
 #include "serverscreen.h"
 
-ServerScreen::ServerScreen(const quint16 port, int max_players, QObject *parent) : QObject (parent) {
+ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject (parent) {
     this->max_players = max_players;
 
     this->server = new MyServer(this);
-    this->server->start(port);
+    this->server->start(ip, port);
     connect(this->server, SIGNAL(onNewConnection(MyThread*)), this, SLOT(newClient(MyThread*)));
 
     this->scene = new QGraphicsScene();

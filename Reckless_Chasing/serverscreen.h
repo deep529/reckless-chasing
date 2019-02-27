@@ -20,7 +20,7 @@
 class ServerScreen : public QObject {
     Q_OBJECT
 public:
-    ServerScreen(const quint16 port = 0, int max = 2, QObject *parent = nullptr);
+    ServerScreen(QString ip, const quint16 port = 0, int max = 2, QObject *parent = nullptr);
     void show();
     void initGame();
     void sendToAll();
