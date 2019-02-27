@@ -37,15 +37,15 @@ void ClientScreen::initObj() {
     this->socket->read(reinterpret_cast<char*>(&this->spkt), sizeof(this->spkt));
 
     for (int i = 0; i < this->max_players; i++) {
-        this->players.push_back(Object());
-        this->players[i].setRect(0,0, 50,50);
-        this->players[i].setX(this->spkt.x[i]);
-        this->players[i].setY(this->spkt.y[i]);
-        this->scene->addItem(&(this->players[i]));
+        this->players.push_back(new Object());
+        this->players[i]->setRect(0,0, 50,50);
+        this->players[i]->setX(this->spkt.x[i]);
+        this->players[i]->setY(this->spkt.y[i]);
+        this->scene->addItem(this->players[i]);
     }
 
-    this->players[this->id].setFlag(QGraphicsItem::ItemIsFocusable);
-    this->players[this->id].setFocus();
+    this->players[this->id]->setFlag(QGraphicsItem::ItemIsFocusable);
+    this->players[this->id]->setFocus();
 
     connect(&this->timer, SIGNAL(timeout()), this, SLOT(sendUpdate()));
     this->timer.start(50);
@@ -55,8 +55,8 @@ void ClientScreen::initObj() {
 
 void ClientScreen::extractData() {
     for (int i = 0; i < this->max_players; i++) {
-        this->players[i].setX(this->spkt.x[i]);
-        this->players[i].setY(this->spkt.y[i]);
+        this->players[i]->setX(this->spkt.x[i]);
+        this->players[i]->setY(this->spkt.y[i]);
     }
 }
 
@@ -74,8 +74,8 @@ void ClientScreen::onDisconnect() {
 
 void ClientScreen::sendUpdate() {
     this->cpkt.id = this->id;
-    this->cpkt.x = this->players[this->id].new_x;
-    this->cpkt.y = this->players[this->id].new_y;
+    this->cpkt.x = this->players[this->id]->new_x;
+    this->cpkt.y = this->players[this->id]->new_y;
 
     this->socket->write(reinterpret_cast<char*>(&(this->cpkt)), sizeof(this->cpkt));
 }

@@ -5,7 +5,6 @@
 #include <QTcpServer>
 #include <QDebug>
 #include "mythread.h"
-#include "packet.h"
 
 class MyServer : public QTcpServer {
     Q_OBJECT
@@ -18,7 +17,6 @@ signals:
     void onNewConnection(MyThread *thread);
 
 public slots:
-    void dataAvailabel(const Packet pkt);
 
 protected:
     void incomingConnection(const qintptr socket_descriptor);

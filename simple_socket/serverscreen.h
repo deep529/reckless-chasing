@@ -14,7 +14,6 @@
 #include "object.h"
 #include "mythread.h"
 #include "myserver.h"
-#include "packet.h"
 #include "c2spacket.h"
 #include "s2cpacket.h"
 
@@ -36,7 +35,7 @@ private:
     QGraphicsScene *scene;
     MyServer *server;
     QVector<MyThread*> threads;
-    QVector<Object> players;
+    QVector<Object*> players;
     S2CPacket spkt;
     QTimer timer;
     int player_count = 1;

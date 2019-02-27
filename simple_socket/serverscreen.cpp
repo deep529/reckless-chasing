@@ -22,21 +22,21 @@ void ServerScreen::show() {
 void ServerScreen::initGame() {
     qDebug() << "Game init";
     for (int i = 0; i < this->max_players; i++) {
-        this->players.push_back(Object());
-        this->players[i].setRect(0,0, 50,50);
-        this->players[i].setX(100*i);
-        this->players[i].setY(100*i);
-        this->scene->addItem(&(this->players[i]));
+        this->players.push_back(new Object());
+        this->players[i]->setRect(0,0, 50,50);
+        this->players[i]->setX(100*i);
+        this->players[i]->setY(100*i);
+        this->scene->addItem(this->players[i]);
     }
 }
 
 void ServerScreen::sendToAll() {
     for (int i = 0; i < this->max_players; i++) {
-        this->spkt.x[i] = this->players[i].new_x;
-        this->spkt.y[i] = this->players[i].new_y;
+        this->spkt.x[i] = this->players[i]->new_x;
+        this->spkt.y[i] = this->players[i]->new_y;
 
-        this->players[i].setX(this->players[i].new_x);
-        this->players[i].setY(this->players[i].new_y);
+        this->players[i]->setX(this->players[i]->new_x);
+        this->players[i]->setY(this->players[i]->new_y);
     }
 
     for (int i = 0; i < this->threads.size(); i++) {
@@ -63,6 +63,6 @@ void ServerScreen::newClient(MyThread *thread) {
 }
 
 void ServerScreen::dataRcvd(C2SPacket cpkt) {
-    this->players[cpkt.id].new_x = cpkt.x;
-    this->players[cpkt.id].new_y = cpkt.y;
+    this->players[cpkt.id]->new_x = cpkt.x;
+    this->players[cpkt.id]->new_y = cpkt.y;
 }

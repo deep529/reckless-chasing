@@ -12,7 +12,6 @@
 #include <QVector>
 #include "object.h"
 #include "myserver.h"
-#include "packet.h"
 
 class ClientScreen : public QObject {
     Q_OBJECT
@@ -36,11 +35,10 @@ private:
     Object *ob;
     Object *other_ob;
     QTcpSocket *socket;
-    Packet pkt, rcv_pkt;
     QTimer timer;
     S2CPacket spkt;
     C2SPacket cpkt;
-    QVector<Object> players;
+    QVector<Object*> players;
     int max_players = 2;
 };
 

@@ -3,9 +3,6 @@
 
 Object::Object() {}
 
-Object::~Object() {}
-
-
 void Object::keyPressEvent(QKeyEvent *event) {
     // qDebug() << "keypressed";
 

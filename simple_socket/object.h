@@ -12,7 +12,6 @@ class Object : public QObject, public QGraphicsEllipseItem {
     Q_OBJECT
 public:
     Object();
-    ~Object();
 
     void keyPressEvent(QKeyEvent *event);
 
