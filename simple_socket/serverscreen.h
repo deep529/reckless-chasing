@@ -15,32 +15,32 @@
 #include "mythread.h"
 #include "myserver.h"
 #include "packet.h"
+#include "c2spacket.h"
+#include "s2cpacket.h"
 
 class ServerScreen : public QObject {
     Q_OBJECT
 public:
-    ServerScreen(const quint16 port = 0, QObject *parent = nullptr);
+    ServerScreen(const quint16 port = 0, int max = 2, QObject *parent = nullptr);
     void show();
-    void sendToAllThreads(Packet pkt);
-
-signals:
-    void sendToClient(Packet);
+    void initGame();
+    void sendToAll();
 
 public slots:
-    void dataRcvd(Packet pkt);
-    void newClient(MyThread *thread);
-    void clientExited(MyThread*);
-    void notify();
+    void slotSendToAll();
+    void newClient(MyThread *);
+    void dataRcvd(C2SPacket cpkt);
 
 private:
     QGraphicsView *view;
     QGraphicsScene *scene;
-    Object *ob;
-    Object *other_ob;
     MyServer *server;
-    Packet pkt;
-    QSet<MyThread*> threads;
+    QVector<MyThread*> threads;
+    QVector<Object> players;
+    S2CPacket spkt;
     QTimer timer;
+    int player_count = 1;
+    int max_players;
 };
 
 

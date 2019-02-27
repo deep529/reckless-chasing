@@ -9,6 +9,7 @@
 #include <QTcpSocket>
 #include <QTime>
 #include <QTimer>
+#include <QVector>
 #include "object.h"
 #include "myserver.h"
 #include "packet.h"
@@ -18,15 +19,18 @@ class ClientScreen : public QObject {
 public:
     ClientScreen(const quint16 port, QObject *parent = nullptr);
     void show();
-    void sendPosition(qreal x, qreal y);
+    void extractData();
 
 private slots:
     void onConnection();
+    void idRcvd();
+    void initObj();
     void dataRcvd();
     void onDisconnect();
     void sendUpdate();
 
 private:
+    int id;
     QGraphicsView *view;
     QGraphicsScene *scene;
     Object *ob;
@@ -34,6 +38,10 @@ private:
     QTcpSocket *socket;
     Packet pkt, rcv_pkt;
     QTimer timer;
+    S2CPacket spkt;
+    C2SPacket cpkt;
+    QVector<Object> players;
+    int max_players = 2;
 };
 
 #endif // CLIENTSCREEN_H

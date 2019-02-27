@@ -15,7 +15,6 @@ public:
     void start(const quint16 port);
 
 signals:
-    void dataRcvd(Packet pkt);
     void onNewConnection(MyThread *thread);
 
 public slots:
@@ -23,7 +22,6 @@ public slots:
 
 protected:
     void incomingConnection(const qintptr socket_descriptor);
-
 };
 
 #endif // MYSERVER_H

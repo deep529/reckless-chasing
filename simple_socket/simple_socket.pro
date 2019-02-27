@@ -32,8 +32,9 @@ SOURCES += \
     serverscreen.cpp \
     mythread.cpp \
     myserver.cpp \
-    packet.cpp \
-    clientscreen.cpp
+    clientscreen.cpp \
+    c2spacket.cpp \
+    s2cpacket.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,8 +42,9 @@ HEADERS += \
     serverscreen.h \
     mythread.h \
     myserver.h \
-    packet.h \
-    clientscreen.h
+    clientscreen.h \
+    c2spacket.h \
+    s2cpacket.h
 
 FORMS += \
         mainwindow.ui

@@ -21,14 +21,22 @@ void MyThread::run() {
 
 void MyThread::onRecv() {
     // qDebug() << "Thread Class: Data rcvd";
-    this->socket->read(reinterpret_cast<char*>(&pkt), sizeof(pkt));
+    this->socket->read(reinterpret_cast<char*>(&this->cpkt), sizeof(this->cpkt));
 
     // qDebug() << "Thread Class: Signal Emited";
-    emit this->dataAvailable(pkt);
+    emit this->dataAvailable(this->cpkt);
 }
 
-void MyThread::sendPacket(Packet pkt) {
-    this->socket->write(reinterpret_cast<char*>(&pkt), sizeof(pkt));
+void MyThread::sendPacket(S2CPacket spkt) {
+    this->socket->write(reinterpret_cast<char*>(&spkt), sizeof(spkt));
+}
+
+void MyThread::sendInt(int data) {
+    this->socket->write(reinterpret_cast<char*>(&data), sizeof(data));
+
+//    QString s = QString::number(data);
+//    QByteArray ba = s.toLocal8Bit();
+//    this->socket->write(ba.data());
 }
 
 void MyThread::onDisconnect() {

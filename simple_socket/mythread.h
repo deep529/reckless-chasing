@@ -4,7 +4,8 @@
 #include <QString>
 #include <QThread>
 #include <QTcpSocket>
-#include "packet.h"
+#include "s2cpacket.h"
+#include "c2spacket.h"
 
 class MyThread : public QThread {
     Q_OBJECT
@@ -13,11 +14,12 @@ public:
     int id;
     explicit MyThread(const qintptr desc, QObject *parent = nullptr);
     void run();
-    void sendPacket(Packet pkt);
+    void sendPacket(S2CPacket pkt);
+    void sendInt(int);
 
 signals:
     void error(QTcpSocket::SocketError err);
-    void dataAvailable(Packet);
+    void dataAvailable(C2SPacket);
     void exiting(MyThread*);
 
 public slots:
@@ -27,7 +29,7 @@ public slots:
 private:
     QTcpSocket *socket;
     qintptr socket_descriptor;
-    Packet pkt;
+    C2SPacket cpkt;
 };
 
 #endif // MYTHREAD_H
