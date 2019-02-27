@@ -8,6 +8,9 @@
 class player : public QGraphicsEllipseItem
 {
 public :
+    qreal radius = 50;
+    QPointF initial_pos = QPointF(400,250);
+
     player()
     {
 

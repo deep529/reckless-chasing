@@ -16,11 +16,11 @@ class Reckless_chasing : public QDialog
     Q_OBJECT
 
 public:
+    QPointF window_size;
 
     QSet<int> pressedKeys;
     player *Player1 = new player();
     QPointF mouse_pos;
-
 
     explicit Reckless_chasing(QWidget *parent = nullptr);
     ~Reckless_chasing();
@@ -35,3 +35,5 @@ private:
 };
 
 #endif // RECKLESS_CHASING_H
+
+

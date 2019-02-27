@@ -4,7 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui testlib
+
+CONFIG += qt console warn_on depend_includepath testcase
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtTest>
+#include <QString>
 #include "reckless_chasing.h"
 
 namespace Ui {
@@ -13,10 +15,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    QPointF window_size;
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
+
     void on_Play_Button_clicked();
 
     void on_Developer_Button_clicked();
@@ -49,8 +53,6 @@ private:
 
     void hide_host_options();
     void show_host_options();
-    void hide_join_options();
-    void show_join_options();
     void show_error();
 };
 

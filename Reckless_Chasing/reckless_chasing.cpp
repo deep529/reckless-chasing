@@ -3,9 +3,7 @@
 #include "player.h"
 #include <QMessageBox>
 #include <QPixmap>
-
 #include <qmath.h>
-
 #include <QApplication>
 #include <QVBoxLayout>
 #include <QGraphicsView>
@@ -13,11 +11,11 @@
 #include <QGraphicsScene>
 #include <QGraphicsEllipseItem>
 #include <QDebug>
-
 #include <QThread>
 #include <stdlib.h>
+#include <QFile>
+#include <iostream>
 #define steps 10
-
 
 Reckless_chasing::Reckless_chasing(QWidget *parent) :
     QDialog(parent),
@@ -27,36 +25,33 @@ Reckless_chasing::Reckless_chasing(QWidget *parent) :
 
     this->installEventFilter(this);
 
-    this->setFixedSize(900,600);
+    window_size = QPointF(900,600);
+
+    this->setFixedSize(window_size.x(),window_size.y());
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
     QGraphicsScene *scene = new QGraphicsScene();
-
-    Player1->setRect(400,250,100,100);
+    Player1->setRect(Player1->initial_pos.x(),Player1->initial_pos.y(),Player1->radius * 2,Player1->radius * 2);
     scene->addItem(Player1);
     Player1->setFlag(QGraphicsItem::ItemIsFocusable);
     Player1->setFocus();
-
     QGraphicsView *view = new QGraphicsView(scene);
     view->setWindowTitle("Reckless Chasing(Play)");
     layout->addWidget(view);
     view->show();
-    view->setFixedSize(900,600);
-    scene->setSceneRect(0,0,900,600);
+    view->setFixedSize(window_size.x(),window_size.y());
+    scene->setSceneRect(0,0,window_size.x(),window_size.y());
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-
     pressedKeys.clear();
-
 }
 
 Reckless_chasing::~Reckless_chasing()
 {
     delete ui;
 }
-
 
 bool Reckless_chasing::eventFilter(QObject *obj, QEvent *event)
 {
@@ -65,6 +60,7 @@ bool Reckless_chasing::eventFilter(QObject *obj, QEvent *event)
     }
     else if (event->type() == QEvent::KeyPress) {
         pressedKeys.insert(((QKeyEvent*)event)->key());
+
 
         if((pressedKeys.contains(Qt::Key_W))&&(pressedKeys.contains(Qt::Key_S)))
         {
@@ -80,19 +76,18 @@ bool Reckless_chasing::eventFilter(QObject *obj, QEvent *event)
             QPointF center = get_MousePos();
             fixed_Pos(center,false);
         }
-
     }
     return false;
 }
 
 QPointF Reckless_chasing::get_MousePos()
 {
-    QPointF window_origin = QPointF(400,250);
+    QPointF window_origin = QPointF(Player1->initial_pos.x(),Player1->initial_pos.y());
     QPointF origin = mapToGlobal(QPoint(0,0));
     QPointF mouse_pos = QCursor::pos();
     mouse_pos -= origin;
     mouse_pos -= window_origin;
-    QPointF center = mouse_pos - QPointF(50,50);
+    QPointF center = mouse_pos - QPointF(Player1->radius,Player1->radius);
     return center;
 }
 
@@ -114,7 +109,7 @@ void Reckless_chasing::fixed_Pos(QPointF center, bool isUp)
         x = Player1->x()-(steps * dx);
         y = Player1->y()-(steps * dy);
     }
-    if(!((x < -400) || (x > 400) || (y < -250) || (y > 250)))
+    if(!((x < -(Player1->initial_pos.x())) || (x > (window_size.x() - Player1->initial_pos.x() - (2 * Player1->radius))) || (y > (window_size.y() - Player1->initial_pos.y() - (2 * Player1->radius))) || (y < -(Player1->initial_pos.y()))))
     {
         if(!(((center.x() - Player1->x())*(center.x() - (Player1->x() + (steps * dx)))) < 0))
         {
@@ -126,4 +121,6 @@ void Reckless_chasing::fixed_Pos(QPointF center, bool isUp)
         }
     }
 }
+
+
 
