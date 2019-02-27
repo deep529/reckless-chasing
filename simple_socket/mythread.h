@@ -20,7 +20,7 @@ public:
 signals:
     void error(QTcpSocket::SocketError err);
     void dataAvailable(C2SPacket);
-    void exiting(MyThread*);
+    void exiting(int);
 
 public slots:
     void onRecv();

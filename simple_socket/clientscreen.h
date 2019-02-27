@@ -39,7 +39,7 @@ private:
     S2CPacket spkt;
     C2SPacket cpkt;
     QVector<Object*> players;
-    int max_players = 2;
+    int max_players = 4;
 };
 
 #endif // CLIENTSCREEN_H

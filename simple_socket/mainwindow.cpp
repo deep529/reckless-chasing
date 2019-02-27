@@ -13,13 +13,13 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_host_button_clicked() {
-    this->screen = new ServerScreen(4567, 2, this);
+    this->screen = new ServerScreen(4567, 4, this);
     static_cast<ServerScreen*>(this->screen)->show();
     this->hide();
 }
 
 void MainWindow::on_join_button_clicked() {
     this->screen = new ClientScreen(4567, this);
-    static_cast<ServerScreen*>(this->screen)->show();
+    static_cast<ClientScreen*>(this->screen)->show();
     this->hide();
 }

@@ -1,5 +1,5 @@
 #include "object.h"
-#define SHIFT 10
+#define SHIFT 5
 
 Object::Object() {}
 

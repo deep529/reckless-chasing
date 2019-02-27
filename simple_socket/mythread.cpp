@@ -32,8 +32,9 @@ void MyThread::sendPacket(S2CPacket spkt) {
 }
 
 void MyThread::sendInt(int data) {
-    this->socket->write(reinterpret_cast<char*>(&data), sizeof(data));
-
+    char c = (char) (data + (int)'0');
+    qDebug() << "this is id:" << c;
+    this->socket->write(&c, sizeof(c));
 //    QString s = QString::number(data);
 //    QByteArray ba = s.toLocal8Bit();
 //    this->socket->write(ba.data());
@@ -43,6 +44,6 @@ void MyThread::onDisconnect() {
     qDebug() << "Thread Class: Disconnecting " << this->socket_descriptor;
 
     this->socket->deleteLater();
-    emit this->exiting(this);
+    emit this->exiting(this->id);
     exit(0);
 }

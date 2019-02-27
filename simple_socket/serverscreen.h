@@ -29,6 +29,7 @@ public slots:
     void slotSendToAll();
     void newClient(MyThread *);
     void dataRcvd(C2SPacket cpkt);
+    void onClientDisconnect(int);
 
 private:
     QGraphicsView *view;
