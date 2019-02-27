@@ -21,6 +21,8 @@ public :
 
     }
 
+    bool iscolliding(player *Player,int i);
+
 protected:
 
 public:
