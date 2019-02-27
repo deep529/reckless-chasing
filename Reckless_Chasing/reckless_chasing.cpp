@@ -25,7 +25,7 @@ Reckless_chasing::Reckless_chasing(QWidget *parent) :
 
     this->installEventFilter(this);
 
-    window_size = QPointF(900,600);
+    window_size = QPointF(2500,1200);
 
     this->setFixedSize(window_size.x(),window_size.y());
 

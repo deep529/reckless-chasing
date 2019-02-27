@@ -175,10 +175,41 @@ void MainWindow::on_Quit_Button_clicked()
 
 void MainWindow::on_actionAbout_Game_triggered()
 {
+    QMessageBox::information(this,"GAME PLAY","  PLAYERS : \n\tCHASER  (Police)\n"
+                                              "\tMULTIPLE RUNNERS  (Chors)\n\n"
+                             "CHASER : \nThe task of the Chaser is to catch the Runners."
+                                              "He can move around the playarena and if he comes in contact with "
+                                              " any Runner then the runner is caught."
+                                              "\n\n"
+                             "RUNNER : \nThe Runner has to run around the arena Recklessly to avoid contact with the Chaser."
+                                              "If the Chaser touches him then he is caught.\n\tGAME OVER (Not Quite Yet)"
+                                              "\n\n"
+                                              "\n\t***TWIST***\n"
+                             "After getting caught the Runners are combined with the Chaser "
+                                              "and now they have to catch the remaining Runners."
+                                              "Now they have to play as one.\n"
+                                              "The game ends when all Runners are caught."
+
+                             );
 
 }
 
 void MainWindow::on_actionHelp_triggered()
 {
+    QMessageBox::information(this,"INSTRUCTIONS","KEYS:\n\n"
+                                                 "Mouse Pointer ->"
+                                                 " \n\tThe Mouse pointer *points* in the direction\n "
+                                                 "\tthe player will move (doesn't cause movement).\n"
+                                                 "\tThe pointer can be moved freely to point in any \n\tdirection."
+                                                 "\n\n"
+                                                 "    'W' ->"
+                                                 "\n\t This will move the player in the direction of the "
+                                                 "\n\tpointer."
+                                                 "\n\n"
+                                                 "    'S' ->"
+                                                 "\n\tThis key will move the player in the opposite "
+                                                 "\n\tdirection of the mouse pointer."
+                                                 "\n\n"
+                                                 "!Warning : Don't hold both (W & S) keys simultaneously.");
 
 }
