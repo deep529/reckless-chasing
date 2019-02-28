@@ -2,21 +2,25 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "reckless_chasing.h"
+#include <QtTest>
+#include <QString>
+#include <serverscreen.h>
+#include <clientscreen.h>
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
+    QPointF window_size;
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
+
     void on_Play_Button_clicked();
 
     void on_Developer_Button_clicked();
@@ -35,22 +39,14 @@ private slots:
 
     void on_actionHelp_triggered();
 
-    void on_Host_Button_clicked();
-
-    void on_Join_Button_clicked();
-
     void on_plus_button_clicked();
 
     void on_minus_button_clicked();
 
 private:
     Ui::MainWindow *ui;
-    Reckless_chasing *play;
+    QObject *screen;
 
-    void hide_host_options();
-    void show_host_options();
-    void hide_join_options();
-    void show_join_options();
     void show_error();
 };
 
