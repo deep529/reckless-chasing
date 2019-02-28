@@ -3,7 +3,7 @@
 
 Object::Object() {}
 
-void Object::keyPressEvent(QKeyEvent *event) {
+/* void Object::keyPressEvent(QKeyEvent *event) {
     // qDebug() << "keypressed";
 
     if (event->key() == Qt::Key_Left) {
@@ -25,3 +25,4 @@ void Object::keyPressEvent(QKeyEvent *event) {
 
     // emit this->movedTo(newX, newY);
 }
+*/

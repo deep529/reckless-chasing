@@ -20,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->player_count->display(2);
     ui->Name_lineEdit->setText("Player 1");
-    ui->IP_Address_lineEdit->setText("127.0.0.1");
-    ui->port_lineEdit->setText("0000");
+    ui->IP_Address_lineEdit->setText("10.42.0.1");
+    ui->port_lineEdit->setText("7851");
 }
 
 MainWindow::~MainWindow() {
@@ -142,7 +142,6 @@ void MainWindow::on_Quit_Button_clicked()
     if( reply == QMessageBox::Yes)
     {
         QApplication::quit();
-        qDebug() <<"home";
     }
 }
 

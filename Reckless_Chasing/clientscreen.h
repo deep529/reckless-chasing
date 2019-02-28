@@ -10,7 +10,8 @@
 #include <QTime>
 #include <QTimer>
 #include <QVector>
-#include "object.h"
+#include <QPointF>
+#include "player.h"
 #include "myserver.h"
 
 class ClientScreen : public QObject {
@@ -18,7 +19,6 @@ class ClientScreen : public QObject {
 public:
     ClientScreen(QString ip, const quint16 port, int max_player, QObject *parent = nullptr);
     void show();
-    void extractData();
 
 private slots:
     void onConnection();
@@ -32,14 +32,20 @@ private:
     int id;
     QGraphicsView *view;
     QGraphicsScene *scene;
-    Object *ob;
-    Object *other_ob;
     QTcpSocket *socket;
     QTimer timer;
     S2CPacket spkt;
     C2SPacket cpkt;
-    QVector<Object*> players;
+    QVector<Player*> players;
+    QSet<int> pressedKeys;
     int max_players = 2;
+
+    QPointF window_size = QPointF(900,600);
+    QPointF get_MousePos();
+    void fixed_Pos(QPointF center,bool isUp);
+    bool is_boundary_crossed(double x, double y, double initialx, double initialy);
+    void extractData();
+    bool eventFilter(QObject * obj, QEvent * event);
 };
 
 #endif // CLIENTSCREEN_H

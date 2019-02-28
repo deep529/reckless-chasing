@@ -11,11 +11,27 @@
 #include <QVector>
 #include <QSet>
 #include <QTimer>
-#include "object.h"
+#include <QMessageBox>
+#include <QPixmap>
+#include <qmath.h>
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QGraphicsTextItem>
+#include <QGraphicsItem>
+#include <QGraphicsEllipseItem>
+#include <QDebug>
+#include <QThread>
+#include <stdlib.h>
+#include <QFile>
+#include <QList>
+#include <QWidget>
+#include <QPointF>
+// #include "object.h"
 #include "mythread.h"
 #include "myserver.h"
 #include "c2spacket.h"
 #include "s2cpacket.h"
+#include "player.h"
 
 class ServerScreen : public QObject {
     Q_OBJECT
@@ -25,6 +41,9 @@ public:
     void initGame();
     void sendToAll();
 
+    QPointF get_MousePos();
+    void fixed_Pos(QPointF center,bool isUp);
+
 public slots:
     void slotSendToAll();
     void newClient(MyThread *);
@@ -32,15 +51,21 @@ public slots:
     void onClientDisconnect(int);
 
 private:
+    QSet<int> pressedKeys;
     QGraphicsView *view;
     QGraphicsScene *scene;
     MyServer *server;
     QVector<MyThread*> threads;
-    QVector<Object*> players;
+    QVector<Player*> players;
     S2CPacket spkt;
     QTimer timer;
     int player_count = 1;
     int max_players;
+    QPointF window_size = QPointF(900,600);
+
+    bool eventFilter(QObject * obj, QEvent * event);
+    bool is_boundary_crossed(double x, double y, double initialx, double initialy);
+    void initialize_pos();
 };
 
 

@@ -5,27 +5,21 @@
 #include <QKeyEvent>
 #include <QGraphicsSceneMouseEvent>
 
-class player : public QGraphicsEllipseItem
+class Player : public QGraphicsEllipseItem
 {
 public :
     qreal radius = 50;
     QPointF initial_pos = QPointF(400,250);
 
-    player()
-    {
+    Player();
+    ~Player();
 
-    }
-
-    ~player()
-    {
-
-    }
-
-    bool iscolliding(player *Player,int i);
+    bool iscolliding(Player *player, int i);
 
 protected:
 
 public:
+    qreal new_x, new_y;
 
 };
 

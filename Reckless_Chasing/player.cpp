@@ -9,12 +9,15 @@
 #include <math.h>
 #include <QWidget>
 
+Player::Player() {}
 
-bool player::iscolliding(player *Player,int i)
-{
+Player::~Player() {}
 
-    if(QGraphicsItem::collidesWithItem(Player))
-    {
+bool Player::iscolliding(Player *player,int i) {
+
+    if(QGraphicsItem::collidesWithItem(player)) {
         qDebug() <<"Colliding with "<<i+1<<'\n';
     }
+
+    return false;
 }

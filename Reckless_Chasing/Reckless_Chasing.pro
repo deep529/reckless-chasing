@@ -29,7 +29,6 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        reckless_chasing.cpp \
         player.cpp \
     c2spacket.cpp \
     clientscreen.cpp \
@@ -37,11 +36,9 @@ SOURCES += \
     mythread.cpp \
     s2cpacket.cpp \
     serverscreen.cpp \
-    object.cpp \
 
 HEADERS += \
         mainwindow.h \
-    reckless_chasing.h \
     player.h \
     c2spacket.h \
     clientscreen.h \
@@ -49,7 +46,6 @@ HEADERS += \
     mythread.h \
     s2cpacket.h \
     serverscreen.h \
-    object.h \
 
 FORMS += \
         mainwindow.ui \

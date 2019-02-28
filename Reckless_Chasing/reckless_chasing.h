@@ -20,7 +20,7 @@ public:
     QPointF window_size;
 
     QSet<int> pressedKeys;
-    player *Player = new player();
+    Player *Player = new player();
     QVector<player *> Other_player;
 
     QPointF mouse_pos;

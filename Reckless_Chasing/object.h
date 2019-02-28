@@ -13,7 +13,7 @@ class Object : public QObject, public QGraphicsEllipseItem {
 public:
     Object();
 
-    void keyPressEvent(QKeyEvent *event);
+    // void keyPressEvent(QKeyEvent *event);
 
 public:
     qreal new_x, new_y;
