@@ -16,7 +16,6 @@
 
 class ClientScreen : public QObject {
     Q_OBJECT
-
 public:
     ClientScreen(QString ip, const quint16 port, int max_player, QObject *parent = nullptr);
     void show();
