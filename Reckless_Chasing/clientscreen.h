@@ -40,12 +40,7 @@ private:
     QSet<int> pressedKeys;
     int max_players = 2;
 
-    QPointF window_size = QPointF(900,600);
-    QPointF get_MousePos();
-    void fixed_Pos(QPointF center,bool isUp);
-    bool is_boundary_crossed(double x, double y, double initialx, double initialy);
     void extractData();
-    bool eventFilter(QObject * obj, QEvent * event);
 };
 
 #endif // CLIENTSCREEN_H

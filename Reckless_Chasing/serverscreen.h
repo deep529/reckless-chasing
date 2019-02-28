@@ -51,7 +51,6 @@ public slots:
     void onClientDisconnect(int);
 
 private:
-    QSet<int> pressedKeys;
     QGraphicsView *view;
     QGraphicsScene *scene;
     MyServer *server;
@@ -61,10 +60,8 @@ private:
     QTimer timer;
     int player_count = 1;
     int max_players;
-    QPointF window_size = QPointF(900,600);
+    QPointF window_size = QPointF(900, 600);
 
-    bool eventFilter(QObject * obj, QEvent * event);
-    bool is_boundary_crossed(double x, double y, double initialx, double initialy);
     void initialize_pos();
 };
 
