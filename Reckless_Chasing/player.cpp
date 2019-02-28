@@ -1,24 +1,12 @@
 #include "player.h"
 #define steps 5
-#include <QPointF>
-#include <iostream>
-#include <QPoint>
-#include <QCursor>
-#include <QGraphicsEllipseItem>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QDebug>
-#include <math.h>
-#include <QWidget>
 
 Player::Player() {}
 
 Player::~Player() {}
 
 void Player::keyPressEvent(QKeyEvent *event) {
-    // qDebug() << "press";
-
-    pressedKeys.insert(((QKeyEvent*)event)->key());
+    pressedKeys.insert(reinterpret_cast<QKeyEvent*>(event)->key());
 
     if((pressedKeys.contains(Qt::Key_W))&&(pressedKeys.contains(Qt::Key_S))){
         //Do  nothing
@@ -34,12 +22,10 @@ void Player::keyPressEvent(QKeyEvent *event) {
 }
 
 void Player::keyReleaseEvent(QKeyEvent *event) {
-    // qDebug() << "release";
-    pressedKeys.remove(((QKeyEvent*)event)->key());
+    pressedKeys.remove(reinterpret_cast<QKeyEvent*>(event)->key());
 }
 
 void Player::fixed_Pos(QPointF center, bool isUp) {
-   // qDebug() <<center.x()<<" "<<new_x<<" "<<center.y()<<" "<<new_y;
     qreal dy = (center.y() - this->new_y);
     qreal dx = (center.x() - this->new_x);
     dy = (dy / sqrt(pow(dy,2) + pow(dx,2)));
@@ -54,9 +40,6 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
         x = this->new_x - (steps * dx);
         y = this->new_y - (steps * dy);
     }
-
-    x = x + this->initial_pos.x();
-    y = y + this->initial_pos.y();
 
     if(!is_boundary_crossed(x,y,this->initial_pos.x(),this->initial_pos.y())) {
         if(!(((center.x() - this->new_x)*(center.x() - (this->new_x + (steps * dx)))) < 0)) {
@@ -86,39 +69,21 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
             this->new_y = (-(this->initial_pos.y()));
         }
     }
-
-    this->players = this->scene()->items();
-
-    /*for (QList<QGraphicsItem*>::iterator itr = this->players.begin(); itr != this->players.end(); itr++) {
-        if (static_cast<Player*>(*itr) != this && typeid(static_cast<Player*>(*itr)) == typeid(this)) {
-            this->iscolliding(static_cast<Player*>(*itr));
-        }
-
-    }*/
 }
 
 QPointF Player::get_MousePos() {
-    QPointF window_origin = QPointF(this->initial_pos.x(),this->initial_pos.y());
-    QGraphicsView *view = this->scene()->views().first();
-    QPointF origin = view->mapToGlobal(QPoint(0,0));
-    QPointF mouse_pos = QCursor::pos();
-    //qDebug() <<mouse_pos.x()<<" ";
+    this->window_origin = QPointF(this->initial_pos.x(),this->initial_pos.y());
+    this->view = this->scene()->views().first();
+    this->origin = view->mapToGlobal(QPoint(0,0));
+    this->mouse_pos = QCursor::pos();
     mouse_pos -= origin;
     mouse_pos -= window_origin;
-    QPointF center = mouse_pos - QPointF(this->radius,this->radius);
-    //qDebug() <<mouse_pos.x()<<" "<<window_origin.x()<<" "<<origin.x()<<" "<<center.x()<<'\n';
+    this->center = mouse_pos - QPointF(this->radius,this->radius);
+
     return center;
 }
 
 
 bool Player::is_boundary_crossed(double x, double y,double initialx, double initialy) {
     return ((x < -initialx) || (x > (window_size.x() - initialx - (2 * this->radius))) || (y > (window_size.y() - initialy - (2 * this->radius))) || (y < -initialy));
-}
-
-bool Player::iscolliding(Player *player) {
-    if(QGraphicsItem::collidesWithItem(player)) {
-        //qDebug() << "Colliding with " << '\n';
-    }
-
-    return false;
 }

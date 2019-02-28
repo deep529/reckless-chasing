@@ -12,9 +12,9 @@ ClientScreen::ClientScreen(QString ip, const quint16 port, int max_players, QObj
 
     this->scene = new QGraphicsScene();
     this->view = new QGraphicsView(scene);
-    this->scene->setSceneRect(0,0,900,600);
+    this->scene->setSceneRect(0, 0, 1050, 700);
     this->view->setWindowTitle("Client");
-    this->view->setFixedSize(900, 600);
+    this->view->setFixedSize(1050, 700);
     this->view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -68,15 +68,13 @@ void ClientScreen::extractData() {
         this->players[i]->setX(this->spkt.x[i] + this->players[i]->initial_pos.x());
         this->players[i]->setY(this->spkt.y[i] + this->players[i]->initial_pos.y());
 
-        if(this->spkt.exist[i] == false)
-        {
+        if(this->spkt.exist[i] == false) {
             this->players[i]->hide();
         }
     }
 }
 
 void ClientScreen::dataRcvd() {
-    // qDebug() << "Data rcvd";
     this->socket->read(reinterpret_cast<char*>(&this->spkt), sizeof(this->spkt));
     this->extractData();
 }

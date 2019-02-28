@@ -32,12 +32,9 @@ void MyThread::sendPacket(S2CPacket spkt) {
 }
 
 void MyThread::sendInt(int data) {
-    char c = (char) (data + (int)'0');
+    char c = char(data + int('0'));
     qDebug() << "this is id:" << c;
     this->socket->write(&c, sizeof(c));
-//    QString s = QString::number(data);
-//    QByteArray ba = s.toLocal8Bit();
-//    this->socket->write(ba.data());
 }
 
 void MyThread::onDisconnect() {

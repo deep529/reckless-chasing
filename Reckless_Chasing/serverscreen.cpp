@@ -9,9 +9,9 @@ ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObj
 
     this->scene = new QGraphicsScene();
     this->view = new QGraphicsView(scene);
-    this->scene->setSceneRect(0,0,900,600);
+    this->scene->setSceneRect(0, 0, 1050, 700);
     this->view->setWindowTitle("Server");
-    this->view->setFixedSize(900,600);
+    this->view->setFixedSize(1050, 700);
     this->view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -102,18 +102,12 @@ void ServerScreen::initialize_pos() {
     qDebug() << "count:" << count;
     QPointF pos = QPointF(0,0);
 
-    //int gap_x = int(window_size.x() - (count * 2 * this->players[0]->radius)) / (count - 1);
-    //int gap_y = int(window_size.y() - (count * 2 * this->players[0]->radius)) / (count - 1);
-
-    //qDebug() <<gap_x<<" "<<gap_y<<'\n';
-
     this->players[0]->initial_pos = pos;
     this->players[0]->new_x = pos.x();
     this->players[0]->new_y = pos.y();
 
     for(int i = 1; i < count; i++) {
-        //pos = pos + QPointF(gap_x,gap_y) + QPointF(2 * this->players[i]->radius,2 * this->players[i]->radius);
-        QPointF pos = QPointF(800*i/count,500*i/count);
+        QPointF pos = QPointF(150*i,100*i);
         this->players[i]->initial_pos = pos;
         this->players[i]->new_x = pos.x();
         this->players[i]->new_y = pos.y();
