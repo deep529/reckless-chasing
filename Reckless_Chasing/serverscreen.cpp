@@ -70,10 +70,11 @@ void ServerScreen::newClient(MyThread *thread) {
         this->initGame();
         this->sendToAll();
         connect(&(this->timer), SIGNAL(timeout()), this, SLOT(slotSendToAll()));
-        this->timer.start(20);
+        this->timer.start(40);
 
         this->players[0]->setFlag(QGraphicsItem::ItemIsFocusable);
         this->players[0]->setFocus();
+        this->server->stopAccepting();
     }
 }
 

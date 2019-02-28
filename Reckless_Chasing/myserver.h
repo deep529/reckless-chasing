@@ -12,6 +12,7 @@ class MyServer : public QTcpServer {
 public:
     explicit MyServer(QObject *parent = nullptr);
     void start(const QString ip, const quint16 port);
+    void stopAccepting();
 
 signals:
     void onNewConnection(MyThread *thread);

@@ -16,7 +16,7 @@ public :
     Player();
     ~Player();
 
-    bool iscolliding(QGraphicsItem  *player);
+    bool iscolliding(Player  *player);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 

@@ -58,7 +58,7 @@ void ClientScreen::initObj() {
     this->players[this->id]->setFocus();
 
     connect(&this->timer, SIGNAL(timeout()), this, SLOT(sendUpdate()));
-    this->timer.start(20);
+    this->timer.start(40);
     disconnect(this->socket, SIGNAL(readyRead()), this, SLOT(initObj()));
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(dataRcvd()));
 }

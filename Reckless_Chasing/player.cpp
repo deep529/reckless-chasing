@@ -85,11 +85,12 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
 
     this->players = this->scene()->items();
 
-    for (QList<QGraphicsItem*>::iterator itr = this->players.begin(); itr != this->players.end(); itr++) {
-        if (typeid(*itr) == typeid(this)) {
-            this->iscolliding(*itr);
+    /*for (QList<QGraphicsItem*>::iterator itr = this->players.begin(); itr != this->players.end(); itr++) {
+        if (static_cast<Player*>(*itr) != this && typeid(static_cast<Player*>(*itr)) == typeid(this)) {
+            this->iscolliding(static_cast<Player*>(*itr));
         }
-    }
+
+    }*/
 }
 
 QPointF Player::get_MousePos() {
@@ -108,9 +109,9 @@ bool Player::is_boundary_crossed(double x, double y,double initialx, double init
     return ((x < -initialx) || (x > (window_size.x() - initialx - (2 * this->radius))) || (y > (window_size.y() - initialy - (2 * this->radius))) || (y < -initialy));
 }
 
-bool Player::iscolliding(QGraphicsItem *player) {
+bool Player::iscolliding(Player *player) {
     if(QGraphicsItem::collidesWithItem(player)) {
-        //qDebug() << "Colliding with " << '\n';
+        qDebug() << "Colliding with " << '\n';
     }
 
     return false;

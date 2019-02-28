@@ -1,6 +1,8 @@
 #include "myserver.h"
 
-MyServer::MyServer(QObject *parent) : QTcpServer(parent) {}
+MyServer::MyServer(QObject *parent) : QTcpServer(parent) {
+    this->setMaxPendingConnections(1);
+}
 
 void MyServer::start(const QString ip, const quint16 port) {
     QHostAddress addr;
@@ -12,6 +14,10 @@ void MyServer::start(const QString ip, const quint16 port) {
     else {
         qDebug() << "Server Class: Server started";
     }
+}
+
+void MyServer::stopAccepting() {
+    this->pauseAccepting();
 }
 
 void MyServer::incomingConnection(const qintptr socket_descriptor) {
