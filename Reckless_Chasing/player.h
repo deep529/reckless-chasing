@@ -6,6 +6,7 @@
 #include <QList>
 #include <QKeyEvent>
 #include <QGraphicsSceneMouseEvent>
+#include <qmath.h>
 
 class Player : public QGraphicsEllipseItem {
 public :

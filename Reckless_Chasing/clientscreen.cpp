@@ -1,5 +1,4 @@
 #include "clientscreen.h"
-#define steps 10
 
 ClientScreen::ClientScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject(parent) {
     this->max_players = max_players;
@@ -44,6 +43,7 @@ void ClientScreen::initObj() {
 
     for (int i = 0; i < this->max_players; i++) {
         this->players.push_back(new Player());
+        this->players[i]->initial_pos = QPointF(this->spkt.x[i], this->spkt.y[i]);
         this->players[i]->setRect(0,0, this->players[i]->radius * 2, this->players[i]->radius * 2);
         this->players[i]->setX(this->spkt.x[i]);
         this->players[i]->setY(this->spkt.y[i]);

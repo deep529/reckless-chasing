@@ -1,5 +1,5 @@
 #include "player.h"
-#define steps 50
+#define steps 5
 #include <QPointF>
 #include <iostream>
 #include <QPoint>
@@ -16,7 +16,7 @@ Player::Player() {}
 Player::~Player() {}
 
 void Player::keyPressEvent(QKeyEvent *event) {
-    qDebug() << "press";
+    // qDebug() << "press";
 
     pressedKeys.insert(((QKeyEvent*)event)->key());
 
@@ -34,7 +34,7 @@ void Player::keyPressEvent(QKeyEvent *event) {
 }
 
 void Player::keyReleaseEvent(QKeyEvent *event) {
-    qDebug() << "release";
+    // qDebug() << "release";
     pressedKeys.remove(((QKeyEvent*)event)->key());
 }
 
@@ -58,35 +58,35 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
         if(!(((center.x() - this->new_x)*(center.x() - (this->new_x + (steps * dx)))) < 0)) {
             this->new_x = x;
         }
-        else {
+        /*else {
             this->new_x = center.x();
-        }
+        }*/
         if(!(((center.y() - this->new_y)*(center.y() - (this->new_y + (steps * dy)))) < 0)) {
             this->new_y = y;
         }
-        else {
+        /*else {
             this->new_y = center.y();
-        }
+        }*/
     }
     else {
         if(x < -(this->initial_pos.x())) {
-            this->setX(-(this->initial_pos.x()));
+            this->new_x = (-(this->initial_pos.x()));
         }
         if(x > (window_size.x() - this->initial_pos.x() - (2 * this->radius))) {
-            this->setX(window_size.x() - this->initial_pos.x() - (2 * this->radius));
+            this->new_x = (window_size.x() - this->initial_pos.x() - (2 * this->radius));
         }
         if(y > (window_size.y() - this->initial_pos.y() - (2 * this->radius))) {
-            this->setY(window_size.y() - this->initial_pos.y() - (2 * this->radius));
+            this->new_y = (window_size.y() - this->initial_pos.y() - (2 * this->radius));
         }
         if(y < -(this->initial_pos.y())) {
-            this->setY(-(this->initial_pos.y()));
+            this->new_y = (-(this->initial_pos.y()));
         }
     }
 
     this->players = this->scene()->items();
 
     for (QList<QGraphicsItem*>::iterator itr = this->players.begin(); itr != this->players.end(); itr++) {
-        if (typeid(*itr) != typeid(this)) {
+        if (typeid(*itr) == typeid(this)) {
             this->iscolliding(*itr);
         }
     }
@@ -110,7 +110,7 @@ bool Player::is_boundary_crossed(double x, double y,double initialx, double init
 
 bool Player::iscolliding(QGraphicsItem *player) {
     if(QGraphicsItem::collidesWithItem(player)) {
-        qDebug() << "Colliding with " << '\n';
+        //qDebug() << "Colliding with " << '\n';
     }
 
     return false;
