@@ -26,7 +26,6 @@
 #include <QList>
 #include <QWidget>
 #include <QPointF>
-// #include "object.h"
 #include "mythread.h"
 #include "myserver.h"
 #include "c2spacket.h"
@@ -35,7 +34,6 @@
 
 class ServerScreen : public QObject {
     Q_OBJECT
-
 public:
     ServerScreen(QString ip, const quint16 port = 0, int max = 2, QObject *parent = nullptr);
     void show();
@@ -43,7 +41,7 @@ public:
     void sendToAll();
 
     QPointF get_MousePos();
-    void fixed_Pos(QPointF center, bool isUp);
+    void fixed_Pos(QPointF center,bool isUp);
 
 public slots:
     void slotSendToAll();
@@ -61,7 +59,7 @@ private:
     QTimer timer;
     int player_count = 1;
     int max_players;
-    QPointF window_size = QPointF(900, 600);
+    QPointF window_size = QPointF(1050,700);
 
     void initialize_pos();
 };

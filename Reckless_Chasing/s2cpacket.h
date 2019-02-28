@@ -8,8 +8,9 @@ public:
     S2CPacket();
     qreal x[4];
     qreal y[4];
+    bool exist[4];
 };
 
 static int s2cpacket_id = qRegisterMetaType<S2CPacket>("S2CPacket");
 
-#endif  // S2CPACKET_H
+#endif // S2CPACKET_H
