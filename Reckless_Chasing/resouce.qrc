@@ -1,2 +1,7 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/images">
+        <file>police.png</file>
+        <file>chor.png</file>
+        <file>black_chor.png</file>
+    </qresource>
+</RCC>

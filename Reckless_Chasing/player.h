@@ -17,8 +17,9 @@
 #include <QDebug>
 #include <math.h>
 #include <QWidget>
+#include <QGraphicsPixmapItem>
 
-class Player : public QGraphicsEllipseItem {
+class Player : public QGraphicsPixmapItem {
 public :
     qreal radius = 50;
     QPointF initial_pos = QPointF(400,250);

@@ -41,10 +41,25 @@ void ClientScreen::idRcvd() {
 void ClientScreen::initObj() {
     this->socket->read(reinterpret_cast<char*>(&this->spkt), sizeof(this->spkt));
 
+
+
+
     for (int i = 0; i < this->max_players; i++) {
         this->players.push_back(new Player());
         this->players[i]->initial_pos = QPointF(this->spkt.x[i], this->spkt.y[i]);
-        this->players[i]->setRect(0,0, this->players[i]->radius * 2, this->players[i]->radius * 2);
+        //this->players[i]->setRect(0,0, this->players[i]->radius * 2, this->players[i]->radius * 2);
+        if(i==0)
+        {
+            this->players[i]->setPixmap(QPixmap(":/images/police.png"));
+        }
+        else if(i==this->id)
+        {
+            this->players[i]->setPixmap(QPixmap(":/images/chor.png"));
+        }
+        else
+        {
+            this->players[i]->setPixmap(QPixmap(":/images/black_chor.png"));
+        }
         this->players[i]->setX(this->spkt.x[i] );
         this->players[i]->setY(this->spkt.y[i] );
 

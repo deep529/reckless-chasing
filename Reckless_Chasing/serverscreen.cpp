@@ -32,7 +32,15 @@ void ServerScreen::initGame() {
 
     qDebug() << this->max_players;
     for(int i = 0; i < this->max_players; i++) {
-        this->players[i]->setRect(0, 0, this->players[i]->radius * 2, this->players[i]->radius * 2);
+        //this->players[i]->setRect(0, 0, this->players[i]->radius * 2, this->players[i]->radius * 2);
+        if(i==0)
+        {
+            this->players[i]->setPixmap(QPixmap(":/images/police.png"));
+        }
+        else
+        {
+            this->players[i]->setPixmap(QPixmap(":/images/chor.png"));
+        }
         this->players[i]->setX(this->players[i]->initial_pos.x());
         this->players[i]->setY(this->players[i]->initial_pos.y());
         this->scene->addItem(this->players[i]);
