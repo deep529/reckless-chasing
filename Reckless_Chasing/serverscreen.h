@@ -35,6 +35,7 @@
 
 class ServerScreen : public QObject {
     Q_OBJECT
+
 public:
     ServerScreen(QString ip, const quint16 port = 0, int max = 2, QObject *parent = nullptr);
     void show();
@@ -42,7 +43,7 @@ public:
     void sendToAll();
 
     QPointF get_MousePos();
-    void fixed_Pos(QPointF center,bool isUp);
+    void fixed_Pos(QPointF center, bool isUp);
 
 public slots:
     void slotSendToAll();

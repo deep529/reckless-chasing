@@ -1,6 +1,6 @@
 #include "serverscreen.h"
 
-ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject (parent) {
+ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject(parent) {
     this->max_players = max_players;
 
     this->server = new MyServer(this);
@@ -9,9 +9,9 @@ ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObj
 
     this->scene = new QGraphicsScene();
     this->view = new QGraphicsView(scene);
-    this->scene->setSceneRect(0,0,900,600);
+    this->scene->setSceneRect(0, 0, 900, 600);
     this->view->setWindowTitle("Server");
-    this->view->setFixedSize(900,600);
+    this->view->setFixedSize(900, 600);
     this->view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -31,7 +31,7 @@ void ServerScreen::initGame() {
     this->initialize_pos();
 
     qDebug() << this->max_players;
-    for(int i = 0; i < this->max_players; i++) {
+    for (int i = 0; i < this->max_players; i++) {
         this->players[i]->setRect(0, 0, this->players[i]->radius * 2, this->players[i]->radius * 2);
         this->players[i]->setX(this->players[i]->initial_pos.x());
         this->players[i]->setY(this->players[i]->initial_pos.y());
@@ -90,7 +90,7 @@ void ServerScreen::onClientDisconnect(int index) {
 void ServerScreen::initialize_pos() {
     int count = this->players.size();
     qDebug() << "count:" << count;
-    QPointF pos = QPointF(0,0);
+    QPointF pos = QPointF(0, 0);
 
     int gap_x = int(window_size.x() - (count * 2 * this->players[0]->radius)) / (count - 1);
     int gap_y = int(window_size.y() - (count * 2 * this->players[0]->radius)) / (count - 1);
@@ -99,9 +99,9 @@ void ServerScreen::initialize_pos() {
     this->players[0]->new_x = pos.x();
     this->players[0]->new_y = pos.y();
 
-    for(int i = 1; i < count; i++) {
-        pos = pos + QPointF(gap_x,gap_y) + QPointF(2 * this->players[i]->radius,2 * this->players[i]->radius);
-        pos = QPointF(0,0);
+    for (int i = 1; i < count; i++) {
+        pos = pos + QPointF(gap_x, gap_y) + QPointF(2 * this->players[i]->radius, 2 * this->players[i]->radius);
+        pos = QPointF(0, 0);
         this->players[i]->initial_pos = pos;
         this->players[i]->new_x = pos.x();
         this->players[i]->new_y = pos.y();

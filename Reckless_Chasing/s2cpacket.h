@@ -12,4 +12,4 @@ public:
 
 static int s2cpacket_id = qRegisterMetaType<S2CPacket>("S2CPacket");
 
-#endif // S2CPACKET_H
+#endif  // S2CPACKET_H
