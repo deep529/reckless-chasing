@@ -82,7 +82,7 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
 
     this->players = this->scene()->items();
 
-   /* for (QList<QGraphicsItem*>::iterator itr = this->players.begin(); itr != this->players.end(); itr++) {
+    /*for (QList<QGraphicsItem*>::iterator itr = this->players.begin(); itr != this->players.end(); itr++) {
         if (static_cast<Player*>(*itr) != this && typeid(static_cast<Player*>(*itr)) == typeid(this)) {
             this->iscolliding(static_cast<Player*>(*itr));
         }
@@ -111,9 +111,7 @@ bool Player::is_boundary_crossed(double x, double y, double initialx, double ini
 
 bool Player::iscolliding(Player *player) {
     if (QGraphicsItem::collidesWithItem(player)) {
-
         qDebug() << "Colliding with " << '\n';
-        player->hide();
     }
 
     return false;

@@ -1,6 +1,4 @@
 #include "serverscreen.h"
-#include "player.h"
-#include <QGraphicsItem>
 
 ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject(parent) {
     this->max_players = max_players;
@@ -43,16 +41,6 @@ void ServerScreen::initGame() {
 }
 
 void ServerScreen::sendToAll() {
-    for(int i=1;i<this->max_players;i++){
-        if (this->players[0]->collidesWithItem(this->players[i])) {
-
-            qDebug() << "Colliding with " << '\n';
-            this->players[i]->hide();
-            this->spkt.exist[i] = false;
-        }
-    }
-
-    /////////////////////////////////////////////////////////////
     for (int i = 0; i < this->max_players; i++) {
         this->spkt.x[i] = this->players[i]->new_x;
         this->spkt.y[i] = this->players[i]->new_y;

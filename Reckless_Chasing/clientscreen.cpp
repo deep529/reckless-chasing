@@ -52,8 +52,6 @@ void ClientScreen::initObj() {
         this->players[i]->new_y = this->spkt.y[i];
 
         this->scene->addItem(this->players[i]);
-
-
     }
 
     this->players[this->id]->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -69,11 +67,6 @@ void ClientScreen::extractData() {
     for (int i = 0; i < this->max_players; i++) {
         this->players[i]->setX(this->spkt.x[i]);
         this->players[i]->setY(this->spkt.y[i]);
-
-        if(this->spkt.exist[i]==false){
-            this->players[i]->hide();
-
-        }
     }
 }
 
