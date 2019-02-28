@@ -45,8 +45,8 @@ void ClientScreen::initObj() {
         this->players.push_back(new Player());
         this->players[i]->initial_pos = QPointF(this->spkt.x[i], this->spkt.y[i]);
         this->players[i]->setRect(0,0, this->players[i]->radius * 2, this->players[i]->radius * 2);
-        this->players[i]->setX(this->spkt.x[i] + this->players[i]->initial_pos.x());
-        this->players[i]->setY(this->spkt.y[i] + this->players[i]->initial_pos.y());
+        this->players[i]->setX(this->spkt.x[i] );
+        this->players[i]->setY(this->spkt.y[i] );
 
         this->players[i]->new_x = this->spkt.x[i];
         this->players[i]->new_y = this->spkt.y[i];
@@ -65,8 +65,8 @@ void ClientScreen::initObj() {
 
 void ClientScreen::extractData() {
     for (int i = 0; i < this->max_players; i++) {
-        this->players[i]->setX(this->spkt.x[i]);
-        this->players[i]->setY(this->spkt.y[i]);
+        this->players[i]->setX(this->spkt.x[i] + this->players[i]->initial_pos.x());
+        this->players[i]->setY(this->spkt.y[i] + this->players[i]->initial_pos.y());
 
         if(this->spkt.exist[i] == false)
         {

@@ -39,12 +39,12 @@ void Player::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void Player::fixed_Pos(QPointF center, bool isUp) {
-    qDebug() <<center.x()<<" "<<new_x<<" "<<center.y()<<" "<<new_y;
+   // qDebug() <<center.x()<<" "<<new_x<<" "<<center.y()<<" "<<new_y;
     qreal dy = (center.y() - this->new_y);
     qreal dx = (center.x() - this->new_x);
     dy = (dy / sqrt(pow(dy,2) + pow(dx,2)));
     dx = (dx / sqrt(pow(dy,2) + pow(dx,2)));
-    qreal x,y;
+    qreal x = 0,y = 0;
 
     if(isUp) {
         x = this->new_x + (steps * dx);
@@ -117,7 +117,7 @@ bool Player::is_boundary_crossed(double x, double y,double initialx, double init
 
 bool Player::iscolliding(Player *player) {
     if(QGraphicsItem::collidesWithItem(player)) {
-        qDebug() << "Colliding with " << '\n';
+        //qDebug() << "Colliding with " << '\n';
     }
 
     return false;
