@@ -34,6 +34,9 @@
 #define SERVER_INIT_SPEED 5
 #define SPEED_INCREMENT_AFTER_COLLISION 2
 
+/**
+ * @brief The ServerScreen class It is the class that handles the player object and also threads on the server
+ */
 class ServerScreen : public QObject {
     Q_OBJECT
 public:

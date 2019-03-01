@@ -10,7 +10,9 @@
 namespace Ui {
 class MainWindow;
 }
-
+/**
+ * @brief The MainWindow class It is the first screen that appears when we run the game. It asks the users for game settings
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

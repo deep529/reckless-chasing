@@ -17,6 +17,9 @@
 #define CLIENT_INIT_SPEED 7
 #define SPEED_AFTER_COLLISION 12
 
+/**
+ * @brief The ClientScreen class This class is used to play the game in the clients who join the server
+ */
 class ClientScreen : public QObject {
     Q_OBJECT
 public:

@@ -1,6 +1,13 @@
 #include "serverscreen.h"
 #include <QPixmap>
 
+/**
+ * @brief ServerScreen::ServerScreen
+ * @param ip It is the ip adress of the server
+ * @param port It is the port number on which server is running
+ * @param max_players It is the number of players participating in the game
+ * @param parent It is the parent of the serverscreen which is the mainwindow
+ */
 ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject (parent) {
     this->max_players = max_players;
 
@@ -36,10 +43,16 @@ ServerScreen::~ServerScreen() {
     delete this->view;
 }
 
+/**
+ * @brief ServerScreen::show This is used to display the game screen
+ */
 void ServerScreen::show() {
     this->view->show();
 }
 
+/**
+ * @brief ServerScreen::initGame This function is used to initialize the game (initializing players,background, etc)
+ */
 void ServerScreen::initGame() {
     qDebug() << "Game init";
     for (int i = 0; i < this->max_players; i++) {
@@ -62,6 +75,9 @@ void ServerScreen::initGame() {
     }
 }
 
+/**
+ * @brief ServerScreen::sendToAll This function is used form the data packet that will be sent to all the clients
+ */
 void ServerScreen::sendToAll() {
     for(int i = 1; i < this->max_players; i++) {
         if (this->spkt.exist[i] && this->players[0]->collidesWithItem(this->players[i])) {
@@ -111,10 +127,17 @@ void ServerScreen::sendToAll() {
     }
 }
 
+/**
+ * @brief ServerScreen::slotSendToAll This function is used to broadcast the latest gameplay to all the clients
+ */
 void ServerScreen::slotSendToAll() {
     this->sendToAll();
 }
 
+/**
+ * @brief ServerScreen::newClient It is called when a new client connects to the server. It creates a new thread to handle that client
+ * @param thread This is the thread that will handle each new client
+ */
 void ServerScreen::newClient(MyThread *thread) {
     thread->sendInt(player_count);
     thread->id = player_count;
@@ -136,6 +159,10 @@ void ServerScreen::newClient(MyThread *thread) {
     }
 }
 
+/**
+ * @brief ServerScreen::dataRcvd It is called when server received data packet from a client
+ * @param cpkt It is the datapacket that is received by the server
+ */
 void ServerScreen::dataRcvd(C2SPacket cpkt) {
     this->mutex.lock();
 
@@ -148,10 +175,17 @@ void ServerScreen::dataRcvd(C2SPacket cpkt) {
     this->mutex.unlock();
 }
 
+/**
+ * @brief ServerScreen::onClientDisconnect This function is executed when a client disconnects
+ * @param index
+ */
 void ServerScreen::onClientDisconnect(int index) {
     exit(0);
 }
 
+/**
+ * @brief ServerScreen::initialize_pos It is used initialize the position of the players on the game screen
+ */
 void ServerScreen::initialize_pos() {
     int count = this->players.size();
     qDebug() << "count:" << count;

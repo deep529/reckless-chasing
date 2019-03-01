@@ -32,6 +32,9 @@ void Player::setSpeed(const int newSpeed) {
 
 int Player::getSpeed() { return this->speed; }
 
+/**
+ * @brief Player::fixed_Pos It is used to update the position of the players based on the input
+ */
 void Player::fixed_Pos(QPointF center, bool isUp) {
     qreal dy = (center.y() - this->new_y);
     qreal dx = (center.x() - this->new_x);
@@ -78,6 +81,9 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
     }
 }
 
+/**
+ * @brief Player::get_MousePos It is used to determine the position of the mouse
+ */
 QPointF Player::get_MousePos() {
     this->window_origin = QPointF(this->initial_pos.x(),this->initial_pos.y());
     this->view = this->scene()->views().first();
@@ -90,7 +96,13 @@ QPointF Player::get_MousePos() {
     return center;
 }
 
-
+/**
+ * @brief Player::is_boundary_crossed Is function is used to ensure that the players do not go outside the screen
+ * @param x The current x-coordinate of the player
+ * @param y The current y-coordinate of the player
+ * @param initialx The previous x-coordinate of the player
+ * @param initialy The previous y-coordinate of the player
+ */
 bool Player::is_boundary_crossed(double x, double y,double initialx, double initialy) {
     return ((x < -initialx) || (x > (window_size.x() - initialx - (2 * this->radius))) || (y > (window_size.y() - initialy - (2 * this->radius))) || (y < -initialy));
 }

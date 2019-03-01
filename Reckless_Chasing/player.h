@@ -18,7 +18,9 @@
 #include <math.h>
 #include <QWidget>
 #include <QGraphicsPixmapItem>
-
+/**
+ * @brief The Player class It is the object class that is used to create players on the screen
+ */
 class Player : public QGraphicsPixmapItem {
 public :
     qreal radius = 50;

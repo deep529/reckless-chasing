@@ -1,6 +1,13 @@
 #include "clientscreen.h"
 #include <QPixmap>
 
+/**
+ * @brief ClientScreen::ClientScreen
+ * @param ip It is the ip adress of the host/server
+ * @param port It is the port number of the game running on the remote host
+ * @param max_players The number of players participating in the game
+ * @param parent It is the parent of the clientscreen (main window)
+ */
 ClientScreen::ClientScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject(parent) {
     this->max_players = max_players;
 
@@ -29,14 +36,23 @@ ClientScreen::ClientScreen(QString ip, const quint16 port, int max_players, QObj
     this->socket->waitForConnected();
 }
 
+/**
+ * @brief ClientScreen::show It will display the screen on which game will be played for the client
+ */
 void ClientScreen::show() {
     this->view->show();
 }
 
+/**
+ * @brief ClientScreen::onConnection This is executed when client sucessfully connects to the server
+ */
 void ClientScreen::onConnection() {
     qDebug() << "Socket connected";
 }
 
+/**
+ * @brief ClientScreen::idRcvd This is executed when the client receives a packet from the server
+ */
 void ClientScreen::idRcvd() {
     char c;
     this->socket->read(&c, sizeof(c));
@@ -46,6 +62,9 @@ void ClientScreen::idRcvd() {
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(initObj()));
 }
 
+/**
+ * @brief ClientScreen::initObj This is used to create the players on the client screen
+ */
 void ClientScreen::initObj() {
     this->socket->read(reinterpret_cast<char*>(&this->spkt), sizeof(this->spkt));
 
@@ -83,6 +102,9 @@ void ClientScreen::initObj() {
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(dataRcvd()));
 }
 
+/**
+ * @brief ClientScreen::extractData It processes the data received by the server
+ */
 void ClientScreen::extractData() {
     for (int i = 0; i < this->max_players; i++) {
         this->players[i]->setX(this->spkt.x[i] + this->players[i]->initial_pos.x());
@@ -103,17 +125,25 @@ void ClientScreen::extractData() {
     }
 }
 
+/**
+ * @brief ClientScreen::dataRcvd It  is called when the client recives data paceket
+ */
 void ClientScreen::dataRcvd() {
     this->socket->read(reinterpret_cast<char*>(&this->spkt), sizeof(this->spkt));
     this->extractData();
 }
 
+/**
+ * @brief ClientScreen::onDisconnect This is called when the client disconnects from the server
+ */
 void ClientScreen::onDisconnect() {
     qDebug() << "Disconnected";
     this->socket->close();
     this->deleteLater();
 }
-
+/**
+ * @brief ClientScreen::sendUpdate Th is is used to send the updated position of the players to the server
+ */
 void ClientScreen::sendUpdate() {
     this->cpkt.id = this->id;
 

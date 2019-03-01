@@ -3,7 +3,6 @@
 MyServer::MyServer(QObject *parent) : QTcpServer(parent) {
     this->setMaxPendingConnections(1);
 }
-
 MyServer::~MyServer() {
     QList<QObject*> thread_list = this->children();
 
@@ -11,7 +10,11 @@ MyServer::~MyServer() {
         reinterpret_cast<QThread*>(*itr)->deleteLater();
     }
 }
-
+/**
+ * @brief MyServer::start This is used to start the server
+ * @param ip This is the ip of the server
+ * @param port This is the port number of the server
+ */
 void MyServer::start(const QString ip, const quint16 port) {
     QHostAddress addr;
     addr.setAddress(ip);
