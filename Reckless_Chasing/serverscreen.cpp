@@ -155,7 +155,7 @@ void ServerScreen::newClient(MyThread *thread) {
         this->initGame();
         this->sendToAll();
         connect(&(this->timer), SIGNAL(timeout()), this, SLOT(slotSendToAll()));
-        this->timer.start(10);
+        this->timer.start(20);
 
         this->players[0]->setSpeed(SERVER_INIT_SPEED);
         this->players[0]->setFlag(QGraphicsItem::ItemIsFocusable);
