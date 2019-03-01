@@ -89,6 +89,11 @@ void ServerScreen::sendToAll() {
             this->players[i]->new_y = this->players[0]->new_y;
 
             this->players[0]->setSpeed(this->players[0]->getSpeed() + SPEED_INCREMENT_AFTER_COLLISION);
+            this->captured++;
+
+            if (this->captured == this->max_players - 1) {
+                exit(0);
+            }
         }
     }
 
@@ -150,7 +155,7 @@ void ServerScreen::newClient(MyThread *thread) {
         this->initGame();
         this->sendToAll();
         connect(&(this->timer), SIGNAL(timeout()), this, SLOT(slotSendToAll()));
-        this->timer.start(100);
+        this->timer.start(10);
 
         this->players[0]->setSpeed(SERVER_INIT_SPEED);
         this->players[0]->setFlag(QGraphicsItem::ItemIsFocusable);

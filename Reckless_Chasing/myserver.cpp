@@ -37,7 +37,7 @@ void MyServer::incomingConnection(const qintptr socket_descriptor) {
     qDebug() << "Server Class: New Connection " << socket_descriptor;
 
     MyThread *thread = new MyThread(socket_descriptor, this);
-    connect(thread, SIGNAL(dataAvailable(C2SPacket)), this->parent(), SLOT(dataRcvd(C2SPacket)));
+    connect(thread, SIGNAL(dataAvailable(C2SPacket)), this->parent(), SLOT(dataRcvd(C2SPacket)), Qt::DirectConnection);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     emit this->onNewConnection(thread);
     thread->start();

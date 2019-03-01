@@ -97,7 +97,7 @@ void ClientScreen::initObj() {
     this->players[this->id]->setFocus();
 
     connect(&this->timer, SIGNAL(timeout()), this, SLOT(sendUpdate()));
-    this->timer.start(100);
+    this->timer.start(10);
     disconnect(this->socket, SIGNAL(readyRead()), this, SLOT(initObj()));
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(dataRcvd()));
 }
@@ -140,6 +140,7 @@ void ClientScreen::onDisconnect() {
     qDebug() << "Disconnected";
     this->socket->close();
     this->deleteLater();
+    exit(0);
 }
 /**
  * @brief ClientScreen::sendUpdate Th is is used to send the updated position of the players to the server

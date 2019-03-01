@@ -68,6 +68,7 @@ private:
     QMutex mutex;
     int player_count = 1;
     int max_players;
+    int captured = 0;
     QPointF window_size = QPointF(1050, 700);
 };
 
