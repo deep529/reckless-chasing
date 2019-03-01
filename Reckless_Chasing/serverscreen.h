@@ -19,8 +19,6 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsItem>
 #include <QGraphicsEllipseItem>
-#include <QDebug>
-#include <QThread>
 #include <stdlib.h>
 #include <QFile>
 #include <QList>
@@ -31,17 +29,27 @@
 #include "c2spacket.h"
 #include "s2cpacket.h"
 #include "player.h"
+#include <QMutex>
 
+#define SERVER_INIT_SPEED 5
+#define SPEED_INCREMENT_AFTER_COLLISION 2
+
+/**
+ * @brief The ServerScreen class It is the class that handles the player object and also threads on the server
+ */
 class ServerScreen : public QObject {
     Q_OBJECT
 public:
     ServerScreen(QString ip, const quint16 port = 0, int max = 2, QObject *parent = nullptr);
+    ~ServerScreen();
     void show();
+
+private:
     void initGame();
     void sendToAll();
-
     QPointF get_MousePos();
     void fixed_Pos(QPointF center,bool isUp);
+    void initialize_pos();
 
 public slots:
     void slotSendToAll();
@@ -57,11 +65,11 @@ private:
     QVector<Player*> players;
     S2CPacket spkt;
     QTimer timer;
+    QMutex mutex;
     int player_count = 1;
     int max_players;
-    QPointF window_size = QPointF(1050,700);
-
-    void initialize_pos();
+    int captured = 0;
+    QPointF window_size = QPointF(1050, 700);
 };
 
 

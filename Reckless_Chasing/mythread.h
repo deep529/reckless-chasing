@@ -6,7 +6,9 @@
 #include <QTcpSocket>
 #include "s2cpacket.h"
 #include "c2spacket.h"
-
+/**
+ * @brief The MyThread class It is used to handle clinent connections using multithreaded paradigms
+ */
 class MyThread : public QThread {
     Q_OBJECT
 

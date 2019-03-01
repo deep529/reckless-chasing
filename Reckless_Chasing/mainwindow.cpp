@@ -14,9 +14,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    window_size = QPointF(900,600);
+    window_size = QPointF(900, 600);
 
-    this->setFixedSize(window_size.x(),window_size.y());
+    this->setFixedSize(window_size.x(), window_size.y());
+
+    QPixmap background(":/images/Background_home.jpg");
+    background = background.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, background);
+    this->setPalette(palette);
 
     ui->player_count->display(2);
     ui->Name_lineEdit->setText("Player 1");
@@ -27,23 +33,29 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow() {
     delete ui;
 }
-
+/**
+ * @brief MainWindow::on_plus_button_clicked This button is used to increase the number of players
+ */
 void MainWindow::on_plus_button_clicked() {
     int players = ui->player_count->intValue();
 
-    if(players < 4) {
+    if (players < 4) {
         ui->player_count->display(players+1);
     }
 }
-
+/**
+ * @brief MainWindow::on_minus_button_clicked This button is used ot decrease the number of players
+ */
 void MainWindow::on_minus_button_clicked() {
     int players = ui->player_count->intValue();
 
-    if(players > 2) {
+    if (players > 2) {
         ui->player_count->display(players-1);
     }
 }
-
+/**
+ * @brief MainWindow::on_Play_Button_clicked This is used to start the game
+ */
 void MainWindow::on_Play_Button_clicked() {
     if (ui->Name_lineEdit->text().isEmpty()) {
         this->show_error();
@@ -53,7 +65,7 @@ void MainWindow::on_Play_Button_clicked() {
         this->show_error();
         return;
     }
-    if ( ui->IP_Address_lineEdit->text().isEmpty()) {
+    if (ui->IP_Address_lineEdit->text().isEmpty()) {
         this->show_error();
         return;
     }
@@ -61,7 +73,7 @@ void MainWindow::on_Play_Button_clicked() {
         this->show_error();
         return;
     }
-    if( ui->port_lineEdit->text().isEmpty()){
+    if (ui->port_lineEdit->text().isEmpty()){
         this->show_error();
         return;
     }
@@ -83,59 +95,73 @@ void MainWindow::on_Play_Button_clicked() {
         this->hide();
     }
 }
-
+/**
+ * @brief MainWindow::show_error This is used to display error message if configuration is incorrect
+ */
 void MainWindow::show_error() {
     QVector<QString> Unfilled;
 
-    if((!(ui->Join_Button->isChecked())) && (!(ui->Host_Button->isChecked()))) {
+    if ((!(ui->Join_Button->isChecked())) && (!(ui->Host_Button->isChecked()))) {
         Unfilled.push_back("Host or Join");
     }
-    if(ui->Name_lineEdit->text().isEmpty()) {
+    if (ui->Name_lineEdit->text().isEmpty()) {
         Unfilled.push_back("Name");
     }
-    if(ui->IP_Address_lineEdit->text().isEmpty()) {
+    if (ui->IP_Address_lineEdit->text().isEmpty()) {
         Unfilled.push_back("IP Address");
     }
-    if( ui->port_lineEdit->text().isEmpty()){
+    if (ui->port_lineEdit->text().isEmpty()){
         Unfilled.push_back("Port id");
     }
 
 
     QString temp = "Please fill up these information to continue :";
 
-    for(int i = 0; i < Unfilled.size(); i++) {
+    for (int i = 0; i < Unfilled.size(); i++) {
         temp = temp + "\n" + char(i+49) + ".\t" +Unfilled[i];
     }
 
     QMessageBox::critical(this,"Error",temp);
     return;
 }
-
+/**
+ * @brief MainWindow::on_Developer_Button_clicked Display the team members who developed the game
+ */
 void MainWindow::on_Developer_Button_clicked()
 {
     QMessageBox::information(this,"Developer's","TEAM NO. : 14\n1.Deep Diwani\n2.Dheeraj Agarwalla\n3.Gajanan Shetkar\n4.Anurag Patil");
 }
-
+/**
+ * @brief MainWindow::on_actionPlay_triggered It is used to start the game
+ */
 void MainWindow::on_actionPlay_triggered()
 {
     on_Play_Button_clicked();
 }
-
+/**
+ * @brief MainWindow::on_actionDeveloper_triggered It displays the names of the game developers
+ */
 void MainWindow::on_actionDeveloper_triggered()
 {
     on_Developer_Button_clicked();
 }
-
+/**
+ * @brief MainWindow::on_actionQuit_triggered It is used to quit the game
+ */
 void MainWindow::on_actionQuit_triggered()
 {
     on_Quit_Button_clicked();
 }
-
+/**
+ * @brief MainWindow::on_actionAbout_Qt_triggered Displays information about the qt software
+ */
 void MainWindow::on_actionAbout_Qt_triggered()
 {
     QMessageBox::aboutQt(this,"About Qt");
 }
-
+/**
+ * @brief MainWindow::on_Quit_Button_clicked It is used to quit the game
+ */
 void MainWindow::on_Quit_Button_clicked()
 {
     QMessageBox::StandardButton reply = QMessageBox::question(this,"Quit","Do you want to quit ?");
@@ -144,7 +170,9 @@ void MainWindow::on_Quit_Button_clicked()
         QApplication::quit();
     }
 }
-
+/**
+ * @brief MainWindow::on_actionAbout_Game_triggered Displays information about the game
+ */
 void MainWindow::on_actionAbout_Game_triggered()
 {
     QMessageBox::information(this,"GAME PLAY","  PLAYERS : \n\tCHASER  (Police)\n"
@@ -165,7 +193,9 @@ void MainWindow::on_actionAbout_Game_triggered()
                              );
 
 }
-
+/**
+ * @brief MainWindow::on_actionHelp_triggered This is e to display the how to play the game instructions
+ */
 void MainWindow::on_actionHelp_triggered()
 {
     QMessageBox::information(this,"INSTRUCTIONS","KEYS:\n\n"

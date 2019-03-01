@@ -5,12 +5,15 @@
 #include <QTcpServer>
 #include <QDebug>
 #include "mythread.h"
-
+/**
+ * @brief The MyServer class  A multithreaded socket server which listens and sends game packets
+ */
 class MyServer : public QTcpServer {
     Q_OBJECT
 
 public:
     explicit MyServer(QObject *parent = nullptr);
+    ~MyServer();
     void start(const QString ip, const quint16 port);
     void stopAccepting();
 
