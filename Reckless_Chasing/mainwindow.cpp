@@ -14,9 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    window_size = QPointF(900,600);
+    window_size = QPointF(900, 600);
 
-    this->setFixedSize(window_size.x(),window_size.y());
+    this->setFixedSize(window_size.x(), window_size.y());
 
     ui->player_count->display(2);
     ui->Name_lineEdit->setText("Player 1");
@@ -31,7 +31,7 @@ MainWindow::~MainWindow() {
 void MainWindow::on_plus_button_clicked() {
     int players = ui->player_count->intValue();
 
-    if(players < 4) {
+    if (players < 4) {
         ui->player_count->display(players+1);
     }
 }
@@ -39,7 +39,7 @@ void MainWindow::on_plus_button_clicked() {
 void MainWindow::on_minus_button_clicked() {
     int players = ui->player_count->intValue();
 
-    if(players > 2) {
+    if (players > 2) {
         ui->player_count->display(players-1);
     }
 }
@@ -53,7 +53,7 @@ void MainWindow::on_Play_Button_clicked() {
         this->show_error();
         return;
     }
-    if ( ui->IP_Address_lineEdit->text().isEmpty()) {
+    if (ui->IP_Address_lineEdit->text().isEmpty()) {
         this->show_error();
         return;
     }
@@ -61,7 +61,7 @@ void MainWindow::on_Play_Button_clicked() {
         this->show_error();
         return;
     }
-    if( ui->port_lineEdit->text().isEmpty()){
+    if (ui->port_lineEdit->text().isEmpty()){
         this->show_error();
         return;
     }
@@ -87,23 +87,23 @@ void MainWindow::on_Play_Button_clicked() {
 void MainWindow::show_error() {
     QVector<QString> Unfilled;
 
-    if((!(ui->Join_Button->isChecked())) && (!(ui->Host_Button->isChecked()))) {
+    if ((!(ui->Join_Button->isChecked())) && (!(ui->Host_Button->isChecked()))) {
         Unfilled.push_back("Host or Join");
     }
-    if(ui->Name_lineEdit->text().isEmpty()) {
+    if (ui->Name_lineEdit->text().isEmpty()) {
         Unfilled.push_back("Name");
     }
-    if(ui->IP_Address_lineEdit->text().isEmpty()) {
+    if (ui->IP_Address_lineEdit->text().isEmpty()) {
         Unfilled.push_back("IP Address");
     }
-    if( ui->port_lineEdit->text().isEmpty()){
+    if (ui->port_lineEdit->text().isEmpty()){
         Unfilled.push_back("Port id");
     }
 
 
     QString temp = "Please fill up these information to continue :";
 
-    for(int i = 0; i < Unfilled.size(); i++) {
+    for (int i = 0; i < Unfilled.size(); i++) {
         temp = temp + "\n" + char(i+49) + ".\t" +Unfilled[i];
     }
 

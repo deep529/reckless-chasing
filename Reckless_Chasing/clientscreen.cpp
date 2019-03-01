@@ -64,6 +64,7 @@ void ClientScreen::initObj() {
         this->scene->addItem(this->players[i]);
     }
 
+    this->players[this->id]->setSpeed(CLIENT_INIT_SPEED);
     this->players[this->id]->setFlag(QGraphicsItem::ItemIsFocusable);
     this->players[this->id]->setFocus();
 
@@ -85,6 +86,7 @@ void ClientScreen::extractData() {
                 this->players[this->id]->clearFocus();
                 this->players[0]->setFlag(QGraphicsItem::ItemIsFocusable);
                 this->players[0]->setFocus();
+                this->players[0]->setSpeed(SPEED_AFTER_COLLISION);
                 this->players[0]->new_x = this->players[0]->x();
                 this->players[0]->new_y = this->players[0]->y();
             }

@@ -1,5 +1,4 @@
 #include "player.h"
-#define steps 5
 
 Player::Player() {}
 
@@ -25,6 +24,14 @@ void Player::keyReleaseEvent(QKeyEvent *event) {
     pressedKeys.remove(reinterpret_cast<QKeyEvent*>(event)->key());
 }
 
+void Player::setSpeed(const int newSpeed) {
+    if (newSpeed >= 0) {
+        this->speed = newSpeed;
+    }
+}
+
+int Player::getSpeed() { return this->speed; }
+
 void Player::fixed_Pos(QPointF center, bool isUp) {
     qreal dy = (center.y() - this->new_y);
     qreal dx = (center.x() - this->new_x);
@@ -32,23 +39,23 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
     dx = (dx / sqrt(pow(dy,2) + pow(dx,2)));
     qreal x = 0,y = 0;
 
-    if(isUp) {
-        x = this->new_x + (steps * dx);
-        y = this->new_y + (steps * dy);
+    if (isUp) {
+        x = this->new_x + (this->speed * dx);
+        y = this->new_y + (this->speed * dy);
     }
     else {
-        x = this->new_x - (steps * dx);
-        y = this->new_y - (steps * dy);
+        x = this->new_x - (this->speed * dx);
+        y = this->new_y - (this->speed * dy);
     }
 
-    if(!is_boundary_crossed(x,y,this->initial_pos.x(),this->initial_pos.y())) {
-        if(!(((center.x() - this->new_x)*(center.x() - (this->new_x + (steps * dx)))) < 0)) {
+    if (!is_boundary_crossed(x,y,this->initial_pos.x(),this->initial_pos.y())) {
+        if (!(((center.x() - this->new_x)*(center.x() - (this->new_x + (this->speed * dx)))) < 0)) {
             this->new_x = x;
         }
         /*else {
             this->new_x = center.x();
         }*/
-        if(!(((center.y() - this->new_y)*(center.y() - (this->new_y + (steps * dy)))) < 0)) {
+        if (!(((center.y() - this->new_y)*(center.y() - (this->new_y + (this->speed * dy)))) < 0)) {
             this->new_y = y;
         }
         /*else {
@@ -56,16 +63,16 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
         }*/
     }
     else {
-        if(x < -(this->initial_pos.x())) {
+        if (x < -(this->initial_pos.x())) {
             this->new_x = (-(this->initial_pos.x()));
         }
-        if(x > (window_size.x() - this->initial_pos.x() - (2 * this->radius))) {
+        if (x > (window_size.x() - this->initial_pos.x() - (2 * this->radius))) {
             this->new_x = (window_size.x() - this->initial_pos.x() - (2 * this->radius));
         }
-        if(y > (window_size.y() - this->initial_pos.y() - (2 * this->radius))) {
+        if (y > (window_size.y() - this->initial_pos.y() - (2 * this->radius))) {
             this->new_y = (window_size.y() - this->initial_pos.y() - (2 * this->radius));
         }
-        if(y < -(this->initial_pos.y())) {
+        if (y < -(this->initial_pos.y())) {
             this->new_y = (-(this->initial_pos.y()));
         }
     }

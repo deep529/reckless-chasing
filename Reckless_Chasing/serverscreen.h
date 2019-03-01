@@ -31,6 +31,9 @@
 #include "player.h"
 #include <QMutex>
 
+#define SERVER_INIT_SPEED 5
+#define SPEED_INCREMENT_AFTER_COLLISION 2
+
 class ServerScreen : public QObject {
     Q_OBJECT
 public:
@@ -62,7 +65,7 @@ private:
     QMutex mutex;
     int player_count = 1;
     int max_players;
-    QPointF window_size = QPointF(1050,700);
+    QPointF window_size = QPointF(1050, 700);
 };
 
 

@@ -29,6 +29,8 @@ public :
 
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+    void setSpeed(int);
+    int getSpeed();
 
 protected:
 
@@ -36,6 +38,7 @@ public:
     qreal new_x, new_y;
 
 private:
+    int speed = 5;
     QPointF window_size = QPointF(1050,700);
     QSet<int> pressedKeys;
     void fixed_Pos(QPointF center, bool isUp);

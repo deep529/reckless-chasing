@@ -14,6 +14,9 @@
 #include "player.h"
 #include "myserver.h"
 
+#define CLIENT_INIT_SPEED 7
+#define SPEED_AFTER_COLLISION 5
+
 class ClientScreen : public QObject {
     Q_OBJECT
 public:

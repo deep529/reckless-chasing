@@ -39,30 +39,31 @@ void ServerScreen::initGame() {
 
     this->initialize_pos();
 
-    qDebug() << this->max_players;
-    for(int i = 0; i < this->max_players; i++) {
-        //this->players[i]->setRect(0, 0, this->players[i]->radius * 2, this->players[i]->radius * 2);
-        if( i == 0 ) {
+    for (int i = 0; i < this->max_players; i++) {
+        if (i == 0) {
             this->players[i]->setPixmap(QPixmap(":/images/police.png"));
         }
         else {
             this->players[i]->setPixmap(QPixmap(":/images/chor.png"));
         }
+
         this->players[i]->setX(this->players[i]->initial_pos.x());
         this->players[i]->setY(this->players[i]->initial_pos.y());
         this->scene->addItem(this->players[i]);
-        qDebug() << "Added p" << i;
     }
 }
 
 void ServerScreen::sendToAll() {
     for(int i = 1; i < this->max_players; i++) {
-        if(this->spkt.exist[i] && this->players[0]->collidesWithItem(this->players[i])) {
+        if (this->spkt.exist[i] && this->players[0]->collidesWithItem(this->players[i])) {
+            qDebug() << "--------------------------collision------------------------";
+
             this->spkt.exist[i] = false;
             this->players[i]->hide();
-            qDebug() << "--------------------------collision------------------------";
             this->players[i]->new_x = this->players[0]->new_x;
             this->players[i]->new_y = this->players[0]->new_y;
+
+            this->players[0]->setSpeed(this->players[0]->getSpeed() + SPEED_INCREMENT_AFTER_COLLISION);
         }
     }
 
@@ -119,6 +120,7 @@ void ServerScreen::newClient(MyThread *thread) {
         connect(&(this->timer), SIGNAL(timeout()), this, SLOT(slotSendToAll()));
         this->timer.start(100);
 
+        this->players[0]->setSpeed(SERVER_INIT_SPEED);
         this->players[0]->setFlag(QGraphicsItem::ItemIsFocusable);
         this->players[0]->setFocus();
         this->server->stopAccepting();
