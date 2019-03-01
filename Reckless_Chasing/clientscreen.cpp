@@ -1,4 +1,5 @@
 #include "clientscreen.h"
+#include <QPixmap>
 
 ClientScreen::ClientScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject(parent) {
     this->max_players = max_players;
@@ -17,6 +18,13 @@ ClientScreen::ClientScreen(QString ip, const quint16 port, int max_players, QObj
     this->view->setFixedSize(1050, 700);
     this->view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    QPixmap background(":/images/Backgroung_play.jpg");
+    background = background.scaled(this->view->size(), Qt::IgnoreAspectRatio);
+    scene->setBackgroundBrush(background);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, background);
+    this->scene->setPalette(palette);
 
     this->socket->waitForConnected();
 }
@@ -48,13 +56,14 @@ void ClientScreen::initObj() {
         if (i == 0) {
             this->players[i]->setPixmap(QPixmap(":/images/police.png"));
         }
-        else if (i == this->id) {
+        else if(i == this->id) {
             this->players[i]->setPixmap(QPixmap(":/images/chor.png"));
         }
         else {
             this->players[i]->setPixmap(QPixmap(":/images/black_chor.png"));
         }
 
+        this->players[i]->setToolTip("player " + QString::number(i));
         this->players[i]->setX(this->spkt.x[i]);
         this->players[i]->setY(this->spkt.y[i]);
 

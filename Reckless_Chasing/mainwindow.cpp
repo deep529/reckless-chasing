@@ -18,6 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setFixedSize(window_size.x(), window_size.y());
 
+    QPixmap background(":/images/Background_home.jpg");
+    background = background.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, background);
+    this->setPalette(palette);
+
     ui->player_count->display(2);
     ui->Name_lineEdit->setText("Player 1");
     ui->IP_Address_lineEdit->setText("10.42.0.1");

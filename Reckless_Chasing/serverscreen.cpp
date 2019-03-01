@@ -1,4 +1,5 @@
 #include "serverscreen.h"
+#include <QPixmap>
 
 ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObject *parent) : QObject (parent) {
     this->max_players = max_players;
@@ -14,6 +15,14 @@ ServerScreen::ServerScreen(QString ip, const quint16 port, int max_players, QObj
     this->view->setFixedSize(1050, 700);
     this->view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+
+    QPixmap background(":/images/Backgroung_play.jpg");
+    background = background.scaled(this->view->size(), Qt::IgnoreAspectRatio);
+    scene->setBackgroundBrush(background);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, background);
+    this->scene->setPalette(palette);
 
     this->players.clear();
 }
@@ -46,7 +55,7 @@ void ServerScreen::initGame() {
         else {
             this->players[i]->setPixmap(QPixmap(":/images/chor.png"));
         }
-
+        this->players[i]->setToolTip("player " + QString::number(i));
         this->players[i]->setX(this->players[i]->initial_pos.x());
         this->players[i]->setY(this->players[i]->initial_pos.y());
         this->scene->addItem(this->players[i]);
