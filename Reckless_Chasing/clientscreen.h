@@ -15,7 +15,7 @@
 #include "myserver.h"
 
 #define CLIENT_INIT_SPEED 7
-#define SPEED_AFTER_COLLISION 5
+#define SPEED_AFTER_COLLISION 12
 
 class ClientScreen : public QObject {
     Q_OBJECT

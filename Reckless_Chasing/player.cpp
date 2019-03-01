@@ -53,13 +53,13 @@ void Player::fixed_Pos(QPointF center, bool isUp) {
             this->new_x = x;
         }
         /*else {
-            this->new_x = center.x();
+            this->new_x = center.x() + 1;
         }*/
         if (!(((center.y() - this->new_y)*(center.y() - (this->new_y + (this->speed * dy)))) < 0)) {
             this->new_y = y;
         }
         /*else {
-            this->new_y = center.y();
+            this->new_y = center.y() + 1;
         }*/
     }
     else {
