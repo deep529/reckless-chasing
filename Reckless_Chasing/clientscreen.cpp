@@ -41,27 +41,22 @@ void ClientScreen::idRcvd() {
 void ClientScreen::initObj() {
     this->socket->read(reinterpret_cast<char*>(&this->spkt), sizeof(this->spkt));
 
-
-
-
     for (int i = 0; i < this->max_players; i++) {
         this->players.push_back(new Player());
         this->players[i]->initial_pos = QPointF(this->spkt.x[i], this->spkt.y[i]);
         //this->players[i]->setRect(0,0, this->players[i]->radius * 2, this->players[i]->radius * 2);
-        if(i==0)
-        {
+        if (i == 0) {
             this->players[i]->setPixmap(QPixmap(":/images/police.png"));
         }
-        else if(i==this->id)
-        {
+        else if (i == this->id) {
             this->players[i]->setPixmap(QPixmap(":/images/chor.png"));
         }
-        else
-        {
+        else {
             this->players[i]->setPixmap(QPixmap(":/images/black_chor.png"));
         }
-        this->players[i]->setX(this->spkt.x[i] );
-        this->players[i]->setY(this->spkt.y[i] );
+
+        this->players[i]->setX(this->spkt.x[i]);
+        this->players[i]->setY(this->spkt.y[i]);
 
         this->players[i]->new_x = this->spkt.x[i];
         this->players[i]->new_y = this->spkt.y[i];
@@ -73,7 +68,7 @@ void ClientScreen::initObj() {
     this->players[this->id]->setFocus();
 
     connect(&this->timer, SIGNAL(timeout()), this, SLOT(sendUpdate()));
-    this->timer.start(50);
+    this->timer.start(100);
     disconnect(this->socket, SIGNAL(readyRead()), this, SLOT(initObj()));
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(dataRcvd()));
 }
@@ -83,8 +78,16 @@ void ClientScreen::extractData() {
         this->players[i]->setX(this->spkt.x[i] + this->players[i]->initial_pos.x());
         this->players[i]->setY(this->spkt.y[i] + this->players[i]->initial_pos.y());
 
-        if(this->spkt.exist[i] == false) {
+        if (this->spkt.exist[i] == false) {
             this->players[i]->hide();
+
+            if (i == this->id) {
+                this->players[this->id]->clearFocus();
+                this->players[0]->setFlag(QGraphicsItem::ItemIsFocusable);
+                this->players[0]->setFocus();
+                this->players[0]->new_x = this->players[0]->x();
+                this->players[0]->new_y = this->players[0]->y();
+            }
         }
     }
 }
@@ -102,8 +105,15 @@ void ClientScreen::onDisconnect() {
 
 void ClientScreen::sendUpdate() {
     this->cpkt.id = this->id;
-    this->cpkt.x = this->players[this->id]->new_x;
-    this->cpkt.y = this->players[this->id]->new_y;
+
+    if (this->spkt.exist[this->id]) {
+        this->cpkt.x = this->players[this->id]->new_x;
+        this->cpkt.y = this->players[this->id]->new_y;
+    }
+    else {
+        this->cpkt.x = this->players[0]->new_x;
+        this->cpkt.y = this->players[0]->new_y;
+    }
 
     this->socket->write(reinterpret_cast<char*>(&(this->cpkt)), sizeof(this->cpkt));
 }

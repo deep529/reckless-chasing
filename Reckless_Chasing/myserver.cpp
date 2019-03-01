@@ -4,6 +4,14 @@ MyServer::MyServer(QObject *parent) : QTcpServer(parent) {
     this->setMaxPendingConnections(1);
 }
 
+MyServer::~MyServer() {
+    QList<QObject*> thread_list = this->children();
+
+    for (QList<QObject*>::iterator itr = thread_list.begin(); itr != thread_list.end(); itr++) {
+        reinterpret_cast<QThread*>(*itr)->deleteLater();
+    }
+}
+
 void MyServer::start(const QString ip, const quint16 port) {
     QHostAddress addr;
     addr.setAddress(ip);
@@ -15,6 +23,8 @@ void MyServer::start(const QString ip, const quint16 port) {
         qDebug() << "Server Class: Server started";
     }
 }
+
+
 
 void MyServer::stopAccepting() {
     this->pauseAccepting();

@@ -11,6 +11,7 @@ class MyServer : public QTcpServer {
 
 public:
     explicit MyServer(QObject *parent = nullptr);
+    ~MyServer();
     void start(const QString ip, const quint16 port);
     void stopAccepting();
 

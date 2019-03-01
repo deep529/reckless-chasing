@@ -19,8 +19,6 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsItem>
 #include <QGraphicsEllipseItem>
-#include <QDebug>
-#include <QThread>
 #include <stdlib.h>
 #include <QFile>
 #include <QList>
@@ -31,17 +29,21 @@
 #include "c2spacket.h"
 #include "s2cpacket.h"
 #include "player.h"
+#include <QMutex>
 
 class ServerScreen : public QObject {
     Q_OBJECT
 public:
     ServerScreen(QString ip, const quint16 port = 0, int max = 2, QObject *parent = nullptr);
+    ~ServerScreen();
     void show();
+
+private:
     void initGame();
     void sendToAll();
-
     QPointF get_MousePos();
     void fixed_Pos(QPointF center,bool isUp);
+    void initialize_pos();
 
 public slots:
     void slotSendToAll();
@@ -57,11 +59,10 @@ private:
     QVector<Player*> players;
     S2CPacket spkt;
     QTimer timer;
+    QMutex mutex;
     int player_count = 1;
     int max_players;
     QPointF window_size = QPointF(1050,700);
-
-    void initialize_pos();
 };
 
 
