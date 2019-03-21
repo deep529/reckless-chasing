@@ -1,8 +1,9 @@
-# Reckless Chasing (You Better Run!)
-Project done as a part of Principle of Programming Languages
+# Reckless Chasing (You Better Run!) 
+Project done as a part of Principle of Programming Languages Course
 
 Instructor: [Dr. Saurabh Joshi](https://sbjoshi.github.io/)
 
+[![Build Status](https://travis-ci.com/deep529/reckless-chasing.svg?branch=master)](https://travis-ci.com/deep529/reckless-chasing)
 
 #### Setting up the dependencies
 Install Qt-libraries via 
